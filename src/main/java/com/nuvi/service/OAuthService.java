@@ -1,17 +1,23 @@
 package com.nuvi.service;
 
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.nuvi.domain.KakaoDTO;
+import com.nuvi.repository.kakaoRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Optional;
 
 @Service
 public class OAuthService {
+
+    @Autowired
+    private kakaoRepository kr;
 
     public String getKakaoAccessToken(String code) {
         String accessToken = "";
@@ -69,10 +75,9 @@ public class OAuthService {
         return accessToken;
     }
 
-    public String getUserInfo (String access_Token) {
-        String resStr = "";
+    public KakaoDTO getUserInfo (String access_Token) {
         //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
-        //HashMap<String, Object> userInfo = new HashMap<>();
+        HashMap<String, Object> userInfo = new HashMap<String, Object>();
         String reqURL = "https://kapi.kakao.com/v2/user/me";
         try {
             URL url = new URL(reqURL);
@@ -95,13 +100,38 @@ public class OAuthService {
             }
             System.out.println("UserInfo - response body : " + result);
 
-            resStr = String.valueOf(result);
+            //Gson 라이브러리로 JSON파싱
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result.toString());
+
+            long id = element.getAsJsonObject().get("id").getAsLong();
+            String nickName = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("profile").getAsJsonObject().get("nickname").getAsString();
+
+            userInfo.put("id", id);
+            userInfo.put("nickName", nickName);
+            br.close();
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        return resStr;
+        // catch 아래 코드 추가.
+        Optional<KakaoDTO> result = kr.findById(userInfo.get("id").toString());
+
+        // 위 코드는 먼저 정보가 저장되있는지 확인하는 코드.
+        System.out.println("S:" + result);
+        if(result.isPresent()) {
+            // result가 null이면 정보가 저장이 안되있는거므로 정보를 저장.
+            kr.(userInfo);
+            // 위 코드가 정보를 저장하기 위해 Repository로 보내는 코드임.
+            return kr.findkakao(userInfo);
+            // 위 코드는 정보 저장 후 컨트롤러에 정보를 보내는 코드임.
+            //  result를 리턴으로 보내면 null이 리턴되므로 위 코드를 사용.
+        } else {
+            return result;
+            // 정보가 이미 있기 때문에 result를 리턴함.
+        }
+
     }
 
 }

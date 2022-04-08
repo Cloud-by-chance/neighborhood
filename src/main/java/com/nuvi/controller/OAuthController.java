@@ -1,23 +1,36 @@
 package com.nuvi.controller;
 
+import com.nuvi.domain.KakaoDTO;
+import com.nuvi.domain.Member;
+import com.nuvi.service.MemberService;
 import com.nuvi.service.OAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpSession;
 
-@RestController
-@RequestMapping("/oauth/callback/kakao")
+@Controller
 public class OAuthController {
 
     @Autowired
     private OAuthService oAuthService;
 
-    @GetMapping("")
-    public String kakaoLogin(String code, HttpSession session, RedirectAttributes redirect) {
+    @Autowired
+    private MemberService memberService;
+
+
+    @GetMapping("/oauth/callback/kakao")
+    @ResponseBody
+    public void kakaoLogin(String code) {
         String accessToken = oAuthService.getKakaoAccessToken(code);
-        redirect.addAttribute("userInfo", oAuthService.getUserInfo(accessToken));
-        return "OAuth";
+        KakaoDTO userInfo = oAuthService.getUserInfo(accessToken);
+        System.out.println("###access_Token#### : " + accessToken);
+        System.out.println("###id#### : " + userInfo.getK_id());
+        System.out.println("###nickname#### : " + userInfo.getK_name());
     }
+
+  /*  @GetMapping("/OAuth")
+    public String callbackUserInfo() {
+        return userInfo;
+    }*/
 }

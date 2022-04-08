@@ -2,14 +2,15 @@ package com.nuvi.repository;
 
 import com.nuvi.domain.Member;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Optional;
 
-@Repository
-public class JpaMemberRepository implements MemberRepository{
-    // DB와 통신하기 위한 설정(JPA 사용에는 필수)
+@Transactional
+public class JpaMemberRepository { //implements MemberRepository{
+/*    // DB와 통신하기 위한 설정(JPA 사용에는 필수)
     private final EntityManager em;
     public JpaMemberRepository(EntityManager em) {
         this.em = em;
@@ -34,8 +35,7 @@ public class JpaMemberRepository implements MemberRepository{
         return result.stream().findAny();
     }
 
-    @Override
     public List<Member> findAll() {
         return em.createQuery("select m from Member m", Member.class).getResultList();
-    }
+    }*/
 }
