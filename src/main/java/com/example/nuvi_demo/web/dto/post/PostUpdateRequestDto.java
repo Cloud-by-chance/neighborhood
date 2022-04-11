@@ -4,8 +4,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Table;
+
 @Getter
 @NoArgsConstructor
+@Table(name = "POST")
 public class PostUpdateRequestDto {
     private String post_name;
     private String content;

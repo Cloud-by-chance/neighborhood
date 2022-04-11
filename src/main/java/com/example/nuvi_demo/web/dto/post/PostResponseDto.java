@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Getter
+@Table(name = "POST")
 public class PostResponseDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

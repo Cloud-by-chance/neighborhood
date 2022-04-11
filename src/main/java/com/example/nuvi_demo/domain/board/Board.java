@@ -30,4 +30,17 @@ public class Board {
         this.board_type = board_type;
         this.region_id = region_id;
     }
+
+    public void update(String board_name, String board_type, int region_id) {
+        this.board_name = board_name;
+        this.board_type = board_type;
+        this.region_id = region_id;
+    }
+
+    @Override
+    public String toString() {
+        return "board_name : " + board_name + "\n" +
+                "board_type : " + board_type + " \n" +
+                "region_id : " + region_id;
+    }
 }

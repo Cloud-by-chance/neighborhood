@@ -27,6 +27,8 @@ public class File {
     private String save_path;
     @Temporal(TemporalType.DATE)
     private Date created_at;
+    @Temporal(TemporalType.DATE)
+    private Date updated_at;
     private Long post_id;
     private Long board_id;
 
@@ -38,5 +40,22 @@ public class File {
         this.save_path = save_path;
         this.post_id = post_id;
         this.board_id = board_id;
+    }
+
+    public void update(String name, String org_name, Long byte_size, String save_path) {
+        this.name = name;
+        this.org_name = org_name;
+        this.byte_size = byte_size;
+        this.save_path = save_path;
+    }
+
+    @Override
+    public String toString() {
+        return "name : " + name + "\n" +
+                "org_name : " + org_name + "\n" +
+                "byte_size : " + byte_size + "\n" +
+                "save_path : " + save_path + "\n" +
+                "post_id : " + post_id + "\n" +
+                "board_id : " + board_id + "\n";
     }
 }

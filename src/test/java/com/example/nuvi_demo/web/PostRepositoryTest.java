@@ -1,5 +1,7 @@
-package com.example.nuvi_demo.domain.post;
+package com.example.nuvi_demo.web;
 
+import com.example.nuvi_demo.domain.post.Post;
+import com.example.nuvi_demo.domain.post.PostRepository;
 import com.example.nuvi_demo.web.dto.post.PostSaveRequestDto;
 import com.example.nuvi_demo.web.dto.post.PostUpdateRequestDto;
 import org.junit.After;
@@ -16,7 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.PostUpdate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -12,9 +12,7 @@ import java.util.Date;
 
 @Getter
 @NoArgsConstructor
-@Entity
 @DynamicInsert
-@DynamicUpdate
 @Table(name = "POST")
 public class PostSaveRequestDto {
     @Id
