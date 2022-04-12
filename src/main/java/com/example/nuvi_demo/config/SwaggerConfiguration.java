@@ -20,7 +20,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.OAS_30)
                 .useDefaultResponseMessages(false)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.firstproject.Controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.nuvi_demo.Controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());

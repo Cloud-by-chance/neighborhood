@@ -39,7 +39,7 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
 
     @ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
     @PostMapping(value = "/signin")
-    public SingleResult<String> signin(@ApiParam(value = "회원ID : 이메일", required = true) @RequestBody UserVo userVo) {
+    public SingleResult<String> signin(@ApiParam(value = "회원 로그인 Token 발급", required = true) @RequestBody UserVo userVo) {
 //    public SingleResult<String> signin(@ApiParam(value = "회원ID : 이메일", required = true) @RequestParam String id,
 //                                       @ApiParam(value = "비밀번호", required = true) @RequestParam String password) {
 //        User user = userJpaRepo.findByUid(id).orElseThrow(CEmailSigninFailedException::new);

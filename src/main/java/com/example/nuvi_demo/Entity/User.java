@@ -21,10 +21,11 @@ import java.util.stream.Collectors;
 @Getter  // user 필드값의 getter를 자동으로 생성합니다.
 @NoArgsConstructor // 인자없는 생성자를 자동으로 생성합니다.
 @AllArgsConstructor // 인자를 모두 갖춘 생성자를 자동으로 생성합니다.
-@Table(name = "user") // 'user' 테이블과 매핑됨을 명시
+@Table(name = "usertest") // 'user' 테이블과 매핑됨을 명시
 public class User implements UserDetails { //user Detail을 상속받는다 즉 Spring Security의 보안적용을 위한 추가 정보를 받는다.
+
     @Id // pk
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long msrl;
 
     @Column(nullable = false, unique = true, length = 30) //유니크 옵션으로 uid는 유일해야됨 uid는 회원 구분 id이다.
