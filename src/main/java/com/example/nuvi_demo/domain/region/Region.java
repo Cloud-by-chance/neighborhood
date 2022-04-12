@@ -31,4 +31,20 @@ public class Region {
         this.region_depth3 = region_depth3;
         this.region_depth4 = region_depth4;
     }
+
+    public void update(String region_depth1, String region_depth2, String region_depth3, String region_depth4) {
+        this.region_depth1 = region_depth1;
+        this.region_depth2 = region_depth2;
+        this.region_depth3 = region_depth3;
+        this.region_depth4 = region_depth4;
+    }
+
+    @Override
+    public String toString() {
+        return "region_id : " + region_id + "\n" +
+                "region_depth1 : " + region_depth1 + "\n" +
+                "region_depth2 : " + region_depth2 + "\n" +
+                "region_depth3 : " + region_depth3 + "\n" +
+                "region_depth4 : " + region_depth4 + "\n";
+    }
 }

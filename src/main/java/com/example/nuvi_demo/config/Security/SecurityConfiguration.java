@@ -32,7 +32,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/*/signup",
             "/*/signup/**",
             "/social/**",
-            "/h2-console"
+            "/h2-console",
+            "/api/**"
     };
 
     @Bean
