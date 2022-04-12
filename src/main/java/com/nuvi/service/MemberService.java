@@ -1,6 +1,5 @@
 package com.nuvi.service;
 
-import com.nuvi.domain.KakaoDTO;
 import com.nuvi.domain.Member;
 import com.nuvi.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;

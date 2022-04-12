@@ -3,10 +3,8 @@ package com.nuvi.domain;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -47,6 +45,6 @@ public class Member {
 
     @Override
     public String toString() {
-        return "nick_name : " + getNick_name() + "\n" + "email : " + getEmail() + "\n" + "age : " + getAge();
+        return "nick_name : " + getNick_name() + "\n";
     }
 }
