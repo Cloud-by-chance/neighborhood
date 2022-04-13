@@ -32,7 +32,7 @@ public class User implements UserDetails { //user Detail을 상속받는다 즉 
 
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String password;
 
     @Column(nullable = false, length = 100)

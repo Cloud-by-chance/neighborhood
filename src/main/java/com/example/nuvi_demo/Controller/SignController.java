@@ -89,17 +89,18 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     }
 
     @RequestMapping("/kakao")
-    public String login(@RequestParam("code") String code, HttpSession session){
+    public SingleResult<String> login(@RequestParam("code") String code, HttpSession session){
         String access_Token = kakao.getKakaoAccessToken(code);
         HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
-
         // 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
         if(userInfo.get("id") != null){
-            session.setAttribute("userId", userInfo.get("id"));
-            session.setAttribute("nickName", userInfo.get("nickName"));
+            session.setAttribute("userId", userInfo.get("id").toString());
+            session.setAttribute("nickName", userInfo.get("nickName").toString());
             session.setAttribute("access_Token", access_Token);
         }
 
-        return "redirect:/";
+        User user_check = userJpaRepo.findById(userInfo.get("id").toString()).orElseThrow(CEmailSigninFailedException::new);
+
+        return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user_check.getUser_id()), user_check.getRoles()));
     }
 }

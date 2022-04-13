@@ -1,6 +1,8 @@
 
 package com.example.nuvi_demo.service.user;
 
+import com.example.nuvi_demo.Entity.User;
+import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.domain.member.Member;
 import com.example.nuvi_demo.domain.member.MemberRepository;
 import com.example.nuvi_demo.personal.kakaoLogin.security.SecurityInfo;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Optional;
 
@@ -26,6 +29,9 @@ public class KakaoAPIService {
     private MemberRepository mr;
     @Autowired
     private final SecurityInfo securityInfo;
+
+    @Autowired
+    private final UserJpaRepo userJpaRepo;
 
     public String getKakaoAccessToken(String code) {
         String accessToken = "";
@@ -133,6 +139,15 @@ public class KakaoAPIService {
                     .nick_name(userInfo.get("nickName").toString())
                     .password("sdf")
                     .region_id(1)  //TODO 지역코드 추후 변경
+                    .build());
+
+            userJpaRepo.save(User.builder()
+                    .user_id(userInfo.get("id").toString())
+                    //.password(passwordEncoder.encode(userInfo()))
+                    .nick_name(userInfo.get("nickName").toString())
+                    //.email(userInfo.getEmail())
+//                .age(user2.getAge())
+                    .roles(Collections.singletonList("ROLE_USER"))
                     .build());
         }
         return userInfo;
