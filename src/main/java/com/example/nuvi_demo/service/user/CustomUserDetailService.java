@@ -15,7 +15,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
     private final UserJpaRepo userJpaRepo;
 
-    public UserDetails loadUserByUsername(String userPk) { //UserDetail에서 userPK값으로 유저 정보를 업데이트 한다.
-        return userJpaRepo.findById(Long.valueOf(userPk)).orElseThrow(CUserNotFoundException::new); //회원 정보 조회 에러시 NotFound발생
+    public UserDetails loadUserByUsername(String user_id) { //UserDetail에서 user_id으로 유저 정보를 업데이트 한다.
+        return userJpaRepo.findById(String.valueOf(user_id)).orElseThrow(CUserNotFoundException::new); //회원 정보 조회 에러시 NotFound발생
     }
 }

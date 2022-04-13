@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UserJpaRepo extends JpaRepository<User, Long> {
+public interface UserJpaRepo extends JpaRepository<User, String> {
 
-    Optional<User> findByUid(String email); //계정 구분짓기 위한 Uid를 위한 것, 이메일로 조회를 한다.
+//    Optional<User> findByUser_id(String user_id); //계정 구분짓기 위한 Uid를 위한 것, 이메일로 조회를 한다.
 
 }

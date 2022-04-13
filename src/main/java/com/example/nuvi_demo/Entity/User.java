@@ -21,15 +21,13 @@ import java.util.stream.Collectors;
 @Getter  // user 필드값의 getter를 자동으로 생성합니다.
 @NoArgsConstructor // 인자없는 생성자를 자동으로 생성합니다.
 @AllArgsConstructor // 인자를 모두 갖춘 생성자를 자동으로 생성합니다.
-@Table(name = "usertest") // 'user' 테이블과 매핑됨을 명시
+@Table(name = "member") // 'user' 테이블과 매핑됨을 명시
 public class User implements UserDetails { //user Detail을 상속받는다 즉 Spring Security의 보안적용을 위한 추가 정보를 받는다.
 
-    @Id // pk
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private long msrl;
+    @Id // pk 유저 id는 유니크, uid로 pk값 지정한다.
+    private String user_id;
 
-    @Column(nullable = false, unique = true, length = 30) //유니크 옵션으로 uid는 유일해야됨 uid는 회원 구분 id이다.
-    private String uid;
+//    @Column(nullable = false, unique = true, length = 30) //유니크 옵션으로 uid는 유일해야됨 uid는 회원 구분 id이다.
 
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -37,7 +35,11 @@ public class User implements UserDetails { //user Detail을 상속받는다 즉 
     private String password;
 
     @Column(nullable = false, length = 100)
-    private String name;
+    private String nick_name;
+
+
+    @Column(nullable = false, length = 100)
+    private String email;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -51,7 +53,7 @@ public class User implements UserDetails { //user Detail을 상속받는다 즉 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername() {
-        return this.uid;
+        return this.nick_name;
     }
 
     //아래는 Security에서 사용되는 값이다.
@@ -69,7 +71,7 @@ public class User implements UserDetails { //user Detail을 상속받는다 즉 
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
-    public boolean isCredentialsNonExpired() {//패스워드가 만료 됐는디
+    public boolean isCredentialsNonExpired() {//패스워드가 만료 됐는wl
         return true;
     }
 

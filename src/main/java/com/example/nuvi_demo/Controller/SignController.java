@@ -47,13 +47,13 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
 //            throw new CEmailSigninFailedException();
 //
 //        return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user.getMsrl()), user.getRoles()));
-        log.info(userVo.toString());
-        User user_check = userJpaRepo.findByUid(userVo.getId()).orElseThrow(CEmailSigninFailedException::new);
+//        log.info(userVo.toString());
+        User user_check = userJpaRepo.findById(userVo.getId()).orElseThrow(CEmailSigninFailedException::new);
         if (!passwordEncoder.matches(userVo.getPassword(),user_check.getPassword() )) //저장된 password와 받아온 password 비교
             throw new CEmailSigninFailedException();
 
 
-        return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user_check.getMsrl()), user_check.getRoles()));
+        return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user_check.getUser_id()), user_check.getRoles()));
     }
 
     @ApiOperation(value = "가입", notes = "회원가입을 한다.")
@@ -70,9 +70,11 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
 //                .roles(Collections.singletonList("ROLE_USER"))
 //                .build());
         userJpaRepo.save(User.builder()
-                .uid(user2.getUid())
+                .user_id(user2.getUser_id())
                 .password(passwordEncoder.encode(user2.getPassword()))
-                .name(user2.getName())
+                .nick_name(user2.getNick_name())
+                .email(user2.getEmail())
+//                .age(user2.getAge())
                 .roles(Collections.singletonList("ROLE_USER"))
                 .build());
         return responseService.getSuccessResult();
