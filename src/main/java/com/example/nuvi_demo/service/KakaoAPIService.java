@@ -129,15 +129,17 @@ public class KakaoAPIService {
         Optional<Member> findMember = mr.findById(userInfo.get("id").toString());
 
         if (findMember.isEmpty()) {
-             mr.saveAndFlush(Member.builder().user_id(userInfo.get("id").toString())
+            mr.saveAndFlush(Member.builder().user_id(userInfo.get("id").toString())
                     .nick_name(userInfo.get("nickName").toString())
+                    .password("sdf")
                     .region_id(1)  //TODO 지역코드 추후 변경
                     .build());
         }
         return userInfo;
     }
+
     // 로그아웃
-    public void kakaoLogout(String access_Token){
+    public void kakaoLogout(String access_Token) {
         String reqURL = "https://kapi.kakao.com/v1/user/logout";
 
         try {

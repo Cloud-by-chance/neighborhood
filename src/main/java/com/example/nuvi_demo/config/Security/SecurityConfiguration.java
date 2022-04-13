@@ -37,8 +37,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/social/**",
             "/h2-console",
             "/api/**",
-            "/oauth/callback/kakao"
-
+            "/v1/**"
     };
 
     @Bean

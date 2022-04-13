@@ -20,7 +20,7 @@ public class MemberResponseDto {
     @Id
     private String user_id;
     private String nick_name;
-    private String passwd;
+    private String password;
     private String email;
     private int age;
     private int region_id;
@@ -29,7 +29,7 @@ public class MemberResponseDto {
     public MemberResponseDto(Member entity) {
         this.user_id = entity.getUser_id();
         this.nick_name = entity.getNick_name();
-        this.passwd = entity.getPasswd();
+        this.password = entity.getPassword();
         this.email = entity.getEmail();
         this.age = entity.getAge();
         this.region_id = entity.getRegion_id();

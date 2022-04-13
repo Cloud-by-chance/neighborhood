@@ -28,9 +28,7 @@ import java.util.HashMap;
 @Slf4j
 @Api(tags = {"1. Sign"})
 @RequiredArgsConstructor
-//@RequestMapping(value = "/v1",produces = MediaType.APPLICATION_JSON_VALUE)
-//@RequestMapping(value = "/oauth/callback",produces = MediaType.APPLICATION_JSON_VALUE)
-@RequestMapping(value = "/oauth/callback")
+@RequestMapping(value = "/v1",produces = MediaType.APPLICATION_JSON_VALUE)
 @CrossOrigin(origins = "*") //리액트와 연동하기 위한 CROS 설정
 public class SignController { //가입과 로그인에 대한 COntroller이다.
     private final KakaoAPIService kakao;
