@@ -1,0 +1,84 @@
+package com.example.nuvi_demo.Entity;
+
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+//User Entity는 Signup 즉 회원 가입을 하는 유저에 대한 정보를 담기 위해 사용.
+
+@ToString
+@Builder // builder를 사용할수 있게 합니다.
+@Entity  // jpa entity임을 알립니다.
+@Getter  // user 필드값의 getter를 자동으로 생성합니다.
+@NoArgsConstructor(access = AccessLevel.PROTECTED) // 인자없는 생성자를 자동으로 생성합니다.
+@AllArgsConstructor // 인자를 모두 갖춘 생성자를 자동으로 생성합니다.
+@Table(name = "member")
+public class User implements UserDetails { //user Detail을 상속받는다 즉 Spring Security의 보안적용을 위한 추가 정보를 받는다.
+    @Id // pk
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long msrl;
+
+    @Column(nullable = false, unique = true, length = 30) //유니크 옵션으로 uid는 유일해야됨 uid는 회원 구분 id이다.
+    private String uid;
+
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Column(nullable = false, length = 100)
+    private String password;
+
+    @Column(nullable = false, length = 100)
+    private String name;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Builder.Default
+    private List<String> roles = new ArrayList<>(); //role은 회원이 가지고 있는 권한의 정보 가입시 기본으로 USER 역할이 부여됨
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public String getUsername() {
+        return this.uid;
+    }
+
+    //아래는 Security에서 사용되는 값이다.
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonExpired() {//계정이 만료가 안됐는지
+        return true;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isAccountNonLocked() { //계정이 잠겼는지
+        return true;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isCredentialsNonExpired() {//패스워드가 만료 됐는디
+        return true;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @Override
+    public boolean isEnabled() { //계정 사용 가능한지
+        return true;
+    }
+}
