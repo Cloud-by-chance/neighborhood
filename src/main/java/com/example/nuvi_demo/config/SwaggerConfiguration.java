@@ -21,6 +21,7 @@ public class SwaggerConfiguration {
                 .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.example.nuvi_demo.Controller"))
+
                 .paths(PathSelectors.any())
                 .build()
                 .apiInfo(apiInfo());

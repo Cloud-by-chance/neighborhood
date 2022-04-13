@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
@@ -35,7 +36,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/*/signup/**",
             "/social/**",
             "/h2-console",
-            "/api/**"
+            "/api/**",
+            "/oauth/callback/kakao"
+
     };
 
     @Bean

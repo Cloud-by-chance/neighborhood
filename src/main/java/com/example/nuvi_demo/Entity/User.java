@@ -30,6 +30,7 @@ public class User implements UserDetails { //user Detail을 상속받는다 즉 
 //    @Column(nullable = false, unique = true, length = 30) //유니크 옵션으로 uid는 유일해야됨 uid는 회원 구분 id이다.
 
 
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false, length = 100)
     private String password;
@@ -40,6 +41,7 @@ public class User implements UserDetails { //user Detail을 상속받는다 즉 
 
     @Column(nullable = false, length = 100)
     private String email;
+
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Builder.Default
@@ -54,6 +56,7 @@ public class User implements UserDetails { //user Detail을 상속받는다 즉 
     @Override
     public String getUsername() {
         return this.nick_name;
+
     }
 
     //아래는 Security에서 사용되는 값이다.

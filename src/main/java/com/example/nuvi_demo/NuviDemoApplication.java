@@ -14,6 +14,7 @@ public class NuviDemoApplication {
 	}
 	@Bean
 	public PasswordEncoder passwordEncoder(){ //PasswordEncoder란  패스워드를 암호화 하는 방식이다. 평문 저장을 막기 위함
+
 		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 }

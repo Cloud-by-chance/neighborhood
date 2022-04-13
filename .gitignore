@@ -199,5 +199,6 @@ $RECYCLE.BIN/
 build/resources/main/application-aws.yaml
 src/main/resources/application-aws.yaml
 
-
+#Kakao info
+src/main/java/com/example/nuvi_demo/personal/
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,intellij,java

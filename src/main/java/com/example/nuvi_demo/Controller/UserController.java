@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = {"2. User"})
 @RequiredArgsConstructor
 @RestController
+
 @RequestMapping(value = "/v1")
 public class UserController {
 
@@ -38,6 +39,7 @@ public class UserController {
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
     @ApiOperation(value = "회원 단건 조회", notes = "회원id(uid)로 회원을 조회한다")
+
     @GetMapping(value = "/user")
     public SingleResult<User> findUser() {
         // SecurityContext에서 인증받은 회원의 정보를 얻어온다.
@@ -45,6 +47,7 @@ public class UserController {
         String id = authentication.getName();
         // 결과데이터가 단일건인경우 getSingleResult를 이용해서 결과를 출력한다.
         return responseService.getSingleResult(userJpaRepo.findById(id).orElseThrow(CUserNotFoundException::new));
+
     }
 
     @ApiImplicitParams({
@@ -58,6 +61,7 @@ public class UserController {
         User user = User.builder()
 //                .user_id(user_id) //user_id는 pk이니깐 일단 보류
                 .nick_name(nick_name)
+
                 .build();
         return responseService.getSingleResult(userJpaRepo.save(user));
     }
@@ -70,6 +74,7 @@ public class UserController {
     public CommonResult delete(
             @ApiParam(value = "회원번호", required = true) @PathVariable String user_id) {
         userJpaRepo.deleteById(user_id);
+
         // 성공 결과 정보만 필요한경우 getSuccessResult()를 이용하여 결과를 출력한다.
         return responseService.getSuccessResult();
     }

@@ -18,6 +18,6 @@ public class UserVo {
     @JsonProperty
     private String password;
 
-
-
+    @JsonProperty
+    private String nickName;
 }
