@@ -20,7 +20,6 @@ public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int is_del;
     @Column(columnDefinition = "text")
     private String content;
@@ -38,5 +37,24 @@ public class Reply {
         this.user_id = user_id;
         this.post_id = post_id;
         this.board_id = board_id;
+    }
+
+    public void update(String content, String user_id, Long post_id, Long board_id) {
+        this.content = content;
+        this.user_id = user_id;
+        this.post_id = post_id;
+        this.board_id = board_id;
+    }
+
+    @Override
+    public String toString() {
+        return "idx : " + idx + "\n" +
+                "is_del : " + is_del + "\n" +
+                "content : " + content + "\n" +
+                "create_dt : " + create_dt + "\n" +
+                "update_dt : " + update_dt + "\n" +
+                "user_id : " + user_id + "\n" +
+                "board_id : " + board_id + "\n" +
+                "post_id : " + post_id + "\n";
     }
 }

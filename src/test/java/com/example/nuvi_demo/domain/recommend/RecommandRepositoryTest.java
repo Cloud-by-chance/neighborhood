@@ -1,4 +1,4 @@
-package com.example.nuvi_demo.domain.recommand;
+package com.example.nuvi_demo.domain.recommend;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

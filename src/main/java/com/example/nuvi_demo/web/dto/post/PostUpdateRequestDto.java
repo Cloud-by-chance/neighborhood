@@ -3,11 +3,13 @@ package com.example.nuvi_demo.web.dto.post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Table;
 
 @Getter
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "POST")
 public class PostUpdateRequestDto {
     private String post_name;
