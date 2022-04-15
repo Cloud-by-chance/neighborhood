@@ -1,5 +1,8 @@
 package com.example.nuvi_demo.domain.recommend;
 
+import com.example.nuvi_demo.domain.member.Member;
+import com.example.nuvi_demo.domain.post.Post;
+import com.example.nuvi_demo.domain.reply.Reply;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,10 +22,20 @@ public class Recommend {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
     private Long cnt;
-    private String user_id;
     private Long post_id;
     private Long board_id;
     private Long reply_id;
+    private String user_id;
+    // N : 1 관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idx")
+    private Reply reply;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
 
     @Builder
     public Recommend(Long cnt, String user_id, Long post_id, Long board_id, Long reply_id) {

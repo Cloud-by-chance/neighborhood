@@ -1,13 +1,23 @@
 package com.example.nuvi_demo.domain.post;
 
+import com.example.nuvi_demo.domain.board.Board;
+import com.example.nuvi_demo.domain.file.File;
+import com.example.nuvi_demo.domain.member.Member;
+import com.example.nuvi_demo.domain.recommend.Recommend;
+import com.example.nuvi_demo.domain.reply.Reply;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -28,12 +38,31 @@ public class Post {
     private int reply_role;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int is_del;
-    @Temporal(TemporalType.DATE)
-    private Date create_dt;
-    @Temporal(TemporalType.DATE)
-    private Date update_dt;
+    private LocalDateTime create_dt;
+    private LocalDateTime update_dt;
     @Column(columnDefinition = "TEXT")
     private String content;
+    // N : 1 관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    private Board board;
+    // 1 : N 관계
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Recommend> recommendList;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<Reply> replyList;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private List<File> fileList;
+
 
     @Builder
     public Post(String post_name, Long board_id, String user_id, int hits, int reply_cnt, int is_lock, int reply_role, String content) {

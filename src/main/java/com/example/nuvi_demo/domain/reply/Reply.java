@@ -1,5 +1,8 @@
 package com.example.nuvi_demo.domain.reply;
 
+import com.example.nuvi_demo.domain.member.Member;
+import com.example.nuvi_demo.domain.post.Post;
+import com.example.nuvi_demo.domain.recommend.Recommend;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +11,9 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -23,13 +28,22 @@ public class Reply {
     private int is_del;
     @Column(columnDefinition = "text")
     private String content;
-    @Temporal(TemporalType.DATE)
-    private Date create_dt;
-    @Temporal(TemporalType.DATE)
-    private Date update_dt;
+    private LocalDateTime create_dt;
+    private LocalDateTime update_dt;
     private String user_id;
     private Long post_id;
     private Long board_id;
+    // N : 1 관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private Member member;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post post;
+    // 1: N 관계
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idx")
+    private List<Recommend> recommendList;
 
     @Builder
     public Reply(String content, String user_id, Long post_id, Long board_id) {

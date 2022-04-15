@@ -1,5 +1,7 @@
 package com.example.nuvi_demo.domain.region;
 
+import com.example.nuvi_demo.domain.board.Board;
+import com.example.nuvi_demo.domain.member.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -22,6 +25,13 @@ public class Region {
     private String region_depth2;
     private String region_depth3;
     private String region_depth4;
+    // 1 : N 관계
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private List<Member> memberList;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "board_id")
+    private List<Board> boardList;
 
     @Builder
     public Region(Long region_id, String region_depth1, String region_depth2, String region_depth3, String region_depth4) {

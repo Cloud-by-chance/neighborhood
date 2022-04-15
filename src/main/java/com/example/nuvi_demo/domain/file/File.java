@@ -1,5 +1,6 @@
 package com.example.nuvi_demo.domain.file;
 
+import com.example.nuvi_demo.domain.post.Post;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Getter
@@ -25,12 +27,14 @@ public class File {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int is_del;
     private String save_path;
-    @Temporal(TemporalType.DATE)
-    private Date created_at;
-    @Temporal(TemporalType.DATE)
-    private Date updated_at;
+    private LocalDateTime created_at;
+    private LocalDateTime updated_at;
     private Long post_id;
     private Long board_id;
+    // N : 1 관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private Post Post;
 
     @Builder
     public File(String name, String org_name, Long byte_size, String save_path, Long post_id, Long board_id) {

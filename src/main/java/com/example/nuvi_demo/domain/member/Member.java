@@ -1,15 +1,18 @@
 package com.example.nuvi_demo.domain.member;
 
+import com.example.nuvi_demo.domain.post.Post;
+import com.example.nuvi_demo.domain.recommend.Recommend;
+import com.example.nuvi_demo.domain.region.Region;
+import com.example.nuvi_demo.domain.reply.Reply;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Entity
@@ -24,14 +27,26 @@ public class Member {
     @Transient
     @Column(insertable = false, updatable = false)
     private Long version;
+    // N : 1 관계
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id")
+    private Region region;
+    // 1 : N 관계
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "post_id")
+    private List<Post> postList;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idx")
+    private List<Recommend> recommendList;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "idx")
+    private List<Reply> replyList;
     private String nick_name;
     private String password;
     private String email;
     private int age;
-    @Temporal(TemporalType.DATE)
-    private Date create_dt;
-    @Temporal(TemporalType.DATE)
-    private Date update_dt;
+    private LocalDateTime create_dt;
+    private LocalDateTime update_dt;
     private int is_del;
     private int region_id;
 
