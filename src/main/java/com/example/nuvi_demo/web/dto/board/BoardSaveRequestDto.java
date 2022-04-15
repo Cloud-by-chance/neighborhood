@@ -11,7 +11,6 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor
 @DynamicInsert
-@Table(name = "BOARD")
 public class BoardSaveRequestDto {
     private String board_name;
     private String board_type;

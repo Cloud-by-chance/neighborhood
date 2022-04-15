@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Getter
-@Table(name = "POST")
 public class PostResponseDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +31,7 @@ public class PostResponseDto {
 
     @Builder
     public PostResponseDto(Post entity) {
+        this.post_id = entity.getPost_id();
         this.post_name = entity.getPost_name();
         this.board_id = entity.getBoard_id();
         this.user_id = entity.getUser_id();

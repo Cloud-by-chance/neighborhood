@@ -14,7 +14,6 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor
 @DynamicUpdate
-@Table(name="REPLY")
 public class ReplyUpdateRequestDto {
     @Column(columnDefinition = "text")
     private String content;

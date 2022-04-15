@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "REGION")
+@Table(name = "region")
 public class Region {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,10 +27,10 @@ public class Region {
     private String region_depth4;
     // 1 : N 관계
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", insertable=false, updatable=false)
     private List<Member> memberList;
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "board_id")
+    @JoinColumn(name = "board_id", insertable=false, updatable=false)
     private List<Board> boardList;
 
     @Builder

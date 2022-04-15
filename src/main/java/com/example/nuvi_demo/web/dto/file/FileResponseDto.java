@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Getter
-@Table(name = "FILE")
 public class FileResponseDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

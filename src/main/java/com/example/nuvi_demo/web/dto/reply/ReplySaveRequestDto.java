@@ -12,7 +12,6 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor
 @DynamicInsert
-@Table(name="REPLY")
 public class ReplySaveRequestDto {
     private int is_del;
     @Column(columnDefinition = "text")

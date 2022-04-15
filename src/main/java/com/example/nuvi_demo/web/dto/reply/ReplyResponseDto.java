@@ -8,7 +8,6 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Getter
-@Table(name="REPLY")
 public class ReplyResponseDto {
     @Column(columnDefinition = "text")
     private String content;

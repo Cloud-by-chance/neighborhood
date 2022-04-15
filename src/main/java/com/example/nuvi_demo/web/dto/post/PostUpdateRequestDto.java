@@ -10,7 +10,6 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor
 @DynamicUpdate
-@Table(name = "POST")
 public class PostUpdateRequestDto {
     private String post_name;
     private String content;

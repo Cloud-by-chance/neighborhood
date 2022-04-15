@@ -44,7 +44,7 @@ public class PostRepositoryTest {
         String post_name = "Test Post";
         String content = "Posting test number one.";
         String user_id = "test2";
-        Long board_id = 1L;
+        Long board_id = 5L;
 
         PostSaveRequestDto requestDto = PostSaveRequestDto.builder()
                 .post_name(post_name)

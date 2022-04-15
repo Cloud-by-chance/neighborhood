@@ -14,7 +14,6 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor
 @DynamicInsert
-@Table(name="RECOMMEND")
 public class RecommendSaveRequestDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

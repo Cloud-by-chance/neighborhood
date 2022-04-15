@@ -117,7 +117,7 @@ public class MemberApicontrollerTest {
                 .email("test5@gmail.com")
                 .age(35)
                 .region_id(1)
-                .passwd("test5")
+//                .passwd("test5")
                 .build());
 
         String updatedId = savedMember.getUser_id();

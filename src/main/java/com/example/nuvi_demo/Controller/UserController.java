@@ -2,7 +2,7 @@ package com.example.nuvi_demo.Controller;
 
 
 
-import com.example.nuvi_demo.Entity.User;
+import com.example.nuvi_demo.domain.Entity.User;
 import com.example.nuvi_demo.Exception.CUserNotFoundException;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.model.response.*;

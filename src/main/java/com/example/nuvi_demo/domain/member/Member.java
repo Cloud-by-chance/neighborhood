@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -29,17 +31,19 @@ public class Member {
     private Long version;
     // N : 1 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "region_id")
+    @JoinColumn(name = "region_id", insertable=false, updatable=false)
     private Region region;
     // 1 : N 관계
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", insertable=false, updatable=false)
     private List<Post> postList;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "idx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Recommend> recommendList;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "idx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Reply> replyList;
     private String nick_name;
     private String password;

@@ -10,7 +10,6 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor
 @DynamicUpdate
-@Table(name = "REGION")
 public class RegionUpdateRequestDto {
     private String region_depth1;
     private String region_depth2;

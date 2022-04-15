@@ -9,6 +9,7 @@ import com.example.nuvi_demo.web.dto.post.PostResponseDto;
 import com.example.nuvi_demo.web.dto.post.PostSaveRequestDto;
 import com.example.nuvi_demo.web.dto.post.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -29,5 +30,11 @@ public class PostApiController {
     @GetMapping("/api/v1/post/{post_id}")
     public PostResponseDto findById(@PathVariable("post_id") Long post_id) {
         return postService.findById(post_id);
+    }
+
+    @DeleteMapping("/api/v1/post/{post_id")
+    public Long delete(@PathVariable Long post_id) {
+        postService.delete(post_id);
+        return post_id;
     }
 }

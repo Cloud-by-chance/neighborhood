@@ -11,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Getter
-@Table(name = "BOARD")
 public class BoardResponseDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

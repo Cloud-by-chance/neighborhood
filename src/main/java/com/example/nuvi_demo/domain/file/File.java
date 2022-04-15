@@ -16,7 +16,7 @@ import java.util.Date;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "FILE")
+@Table(name = "file")
 public class File {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +33,7 @@ public class File {
     private Long board_id;
     // N : 1 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", insertable=false, updatable=false)
     private Post Post;
 
     @Builder

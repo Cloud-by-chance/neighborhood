@@ -52,7 +52,7 @@ public class MemberApiControllerTest {
                 .nick_name(nick_name)
                 .email(email)
                 .age(age)
-                .passwd(passwd)
+//                .passwd(passwd)
                 .region_id(1)
                 .build());
         // when
@@ -62,7 +62,7 @@ public class MemberApiControllerTest {
         assertThat(savedMember.getNick_name()).isEqualTo(nick_name);
         assertThat(savedMember.getAge()).isEqualTo(age);
         assertThat(savedMember.getEmail()).isEqualTo(email);
-        assertThat(savedMember.getPasswd()).isEqualTo(passwd);
+//        assertThat(savedMember.getPasswd()).isEqualTo(passwd);
         assertThat(savedMember.getUser_id()).isEqualTo(user_id);
     }
 

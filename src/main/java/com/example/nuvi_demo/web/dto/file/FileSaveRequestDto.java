@@ -11,7 +11,6 @@ import java.util.Date;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "FILE")
 @DynamicInsert
 public class FileSaveRequestDto {
     @Id

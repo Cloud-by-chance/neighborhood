@@ -14,7 +14,6 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor
 @DynamicInsert
-@Table(name = "REGION")
 public class RegionSaveRequestDto {
     private String region_depth1;
     private String region_depth2;

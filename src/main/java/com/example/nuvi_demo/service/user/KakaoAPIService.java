@@ -1,11 +1,11 @@
 
 package com.example.nuvi_demo.service.user;
 
-import com.example.nuvi_demo.Entity.User;
+import com.example.nuvi_demo.domain.Entity.User;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.domain.member.Member;
 import com.example.nuvi_demo.domain.member.MemberRepository;
-import com.example.nuvi_demo.personal.kakaoLogin.security.SecurityInfo;
+import com.example.nuvi_demo.domain.personal.kakaoLogin.security.SecurityInfo;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

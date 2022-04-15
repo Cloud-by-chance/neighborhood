@@ -6,11 +6,11 @@ import com.example.nuvi_demo.domain.recommend.Recommend;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.List;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "REPLY")
+@Table(name = "reply")
 public class Reply {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,14 +35,15 @@ public class Reply {
     private Long board_id;
     // N : 1 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", insertable=false, updatable=false)
     private Member member;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", insertable=false, updatable=false)
     private Post post;
     // 1: N 관계
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "idx")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Recommend> recommendList;
 
     @Builder

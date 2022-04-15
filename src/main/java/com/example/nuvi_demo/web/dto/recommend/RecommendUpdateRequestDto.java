@@ -10,7 +10,6 @@ import javax.persistence.Table;
 @Getter
 @NoArgsConstructor
 @DynamicUpdate
-@Table(name = "RECOMMEND")
 public class RecommendUpdateRequestDto {
     private Long cnt;
 

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @DynamicUpdate
 @DynamicInsert
-@Table(name = "BOARD")
 public class BoardUpdateRequestDto {
     private String board_name;
     private String board_type;

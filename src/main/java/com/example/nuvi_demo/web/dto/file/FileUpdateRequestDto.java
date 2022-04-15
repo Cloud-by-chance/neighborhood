@@ -9,7 +9,6 @@ import javax.persistence.Table;
 
 @Getter
 @NoArgsConstructor
-@Table(name = "FILE")
 @DynamicUpdate
 public class FileUpdateRequestDto {
     private String name;

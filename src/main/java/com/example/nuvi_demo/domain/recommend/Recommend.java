@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Entity
 @DynamicInsert
 @DynamicUpdate
-@Table(name = "RECOMMEND")
+@Table(name = "recommend")
 public class Recommend {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,13 +28,13 @@ public class Recommend {
     private String user_id;
     // N : 1 관계
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", insertable=false, updatable=false)
     private Member member;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idx")
+    @JoinColumn(name = "idx", insertable=false, updatable=false)
     private Reply reply;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
+    @JoinColumn(name = "post_id", insertable=false, updatable=false)
     private Post post;
 
     @Builder

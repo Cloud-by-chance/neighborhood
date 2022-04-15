@@ -13,7 +13,6 @@ import java.util.Date;
 @Getter
 @NoArgsConstructor
 @DynamicInsert
-@Table(name = "POST")
 public class PostSaveRequestDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

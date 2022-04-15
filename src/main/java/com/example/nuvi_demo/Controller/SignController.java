@@ -1,8 +1,8 @@
 package com.example.nuvi_demo.Controller;
 
 
-import com.example.nuvi_demo.Entity.User;
-import com.example.nuvi_demo.Entity.UserVo;
+import com.example.nuvi_demo.domain.Entity.User;
+import com.example.nuvi_demo.domain.Entity.UserVo;
 import com.example.nuvi_demo.Exception.CEmailSigninFailedException;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.config.Security.JwtTokenProvider;

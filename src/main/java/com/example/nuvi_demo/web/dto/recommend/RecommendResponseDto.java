@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Getter
-@Table(name = "RECOMMEND")
 public class RecommendResponseDto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

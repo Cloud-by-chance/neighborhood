@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Getter
-@Table(name = "REGION")
 public class RegionResponseDto {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
