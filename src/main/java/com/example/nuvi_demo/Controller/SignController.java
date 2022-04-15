@@ -1,9 +1,12 @@
 package com.example.nuvi_demo.Controller;
 
 
+import com.example.nuvi_demo.Entity.TokenVo;
 import com.example.nuvi_demo.Entity.User;
 import com.example.nuvi_demo.Entity.UserVo;
 import com.example.nuvi_demo.Exception.CEmailSigninFailedException;
+import com.example.nuvi_demo.Exception.KakaoCodeException;
+import com.example.nuvi_demo.Exception.KakaoTokenException;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.config.Security.JwtTokenProvider;
 import com.example.nuvi_demo.model.response.*;
@@ -28,7 +31,7 @@ import java.util.HashMap;
 @Slf4j
 @Api(tags = {"1. Sign"})
 @RequiredArgsConstructor
-@RequestMapping(value = "/v1",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/v1", produces = "application/json;charset=utf-8")
 @CrossOrigin(origins = "*") //리액트와 연동하기 위한 CROS 설정
 public class SignController { //가입과 로그인에 대한 COntroller이다.
     private final KakaoAPIService kakao;
@@ -88,19 +91,17 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
         return responseService.getSuccessResult();
     }
 
-    @RequestMapping("/kakao")
-    public SingleResult<String> login(@RequestParam("code") String code, HttpSession session){
-        String access_Token = kakao.getKakaoAccessToken(code);
-        HashMap<String, Object> userInfo = kakao.getUserInfo(access_Token);
-        // 클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
-        if(userInfo.get("id") != null){
-            session.setAttribute("userId", userInfo.get("id").toString());
-            session.setAttribute("nickName", userInfo.get("nickName").toString());
-            session.setAttribute("access_Token", access_Token);
-        }
-
+    @RequestMapping(value = "/kakaoLogin")
+    public SingleResult<String> login(@RequestBody TokenVo tokenVo, HttpSession session){
+       // String access_Token = kakao.getKakaoAccessToken(code).orElseThrow(KakaoTokenException::new);
+        System.out.println(tokenVo.getAccessToken()+ tokenVo.getRefreshToken());
+        HashMap<String, Object> userInfo = kakao.getUserInfo(tokenVo.getAccessToken());
         User user_check = userJpaRepo.findById(userInfo.get("id").toString()).orElseThrow(CEmailSigninFailedException::new);
+        String jwtToken = jwtTokenProvider.createToken(String.valueOf(user_check.getUser_id()), user_check.getRoles());
 
-        return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user_check.getUser_id()), user_check.getRoles()));
+        kakao.saveToken(userInfo.get("id").toString(), jwtToken, tokenVo.getRefreshToken());
+
+        return responseService.getSingleResult(jwtToken);
     }
+
 }

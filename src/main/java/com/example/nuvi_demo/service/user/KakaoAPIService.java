@@ -1,22 +1,28 @@
 
 package com.example.nuvi_demo.service.user;
 
+import com.example.nuvi_demo.Entity.Token;
 import com.example.nuvi_demo.Entity.User;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.domain.member.Member;
 import com.example.nuvi_demo.domain.member.MemberRepository;
+import com.example.nuvi_demo.domain.member.TokenRepository;
 import com.example.nuvi_demo.personal.kakaoLogin.security.SecurityInfo;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Optional;
@@ -29,11 +35,13 @@ public class KakaoAPIService {
     private MemberRepository mr;
     @Autowired
     private final SecurityInfo securityInfo;
-
+    @Autowired
+    private  final TokenRepository tokenRepository;
     @Autowired
     private final UserJpaRepo userJpaRepo;
-
-    public String getKakaoAccessToken(String code) {
+    @Autowired
+    private final PasswordEncoder passwordEncoder;
+    public Optional<String> getKakaoAccessToken(String code) {
         String accessToken = "";
         String refreshToken = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
@@ -86,10 +94,10 @@ public class KakaoAPIService {
             e.printStackTrace();
         }
 
-        return accessToken;
+        return Optional.of(accessToken);
     }
 
-    public HashMap<String, Object> getUserInfo(String access_Token) {
+    public HashMap<String, Object> getUserInfo(String accessToken) {
         //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
         HashMap<String, Object> userInfo = new HashMap<String, Object>();
         String reqURL = "https://kapi.kakao.com/v2/user/me";
@@ -97,11 +105,7 @@ public class KakaoAPIService {
             URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
-            //    요청에 필요한 Header에 포함될 내용
-            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
-
-            // int responseCode = conn.getResponseCode();
-            // System.out.println("responseCode : " + responseCode);
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -132,6 +136,8 @@ public class KakaoAPIService {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
         Optional<Member> findMember = mr.findById(userInfo.get("id").toString());
 
         if (findMember.isEmpty()) {
@@ -143,7 +149,7 @@ public class KakaoAPIService {
 
             userJpaRepo.save(User.builder()
                     .user_id(userInfo.get("id").toString())
-                    //.password(passwordEncoder.encode(userInfo()))
+                    .password(passwordEncoder.encode(userInfo.get("id").toString() + accessToken))
                     .nick_name(userInfo.get("nickName").toString())
                     //.email(userInfo.getEmail())
 //                .age(user2.getAge())
@@ -180,6 +186,15 @@ public class KakaoAPIService {
             e.printStackTrace();
         }
 
+    }
+
+    public void saveToken(String id, String jwtToken, String refreshToken) {
+        tokenRepository.save(Token.builder()
+                        .idx(Base64.getEncoder().encodeToString((id+jwtToken).getBytes(StandardCharsets.UTF_8)))
+                        .jwt(jwtToken)
+                        .refresh_tk(refreshToken)
+                        .user_id(id)
+                        .build());
     }
 }
 
