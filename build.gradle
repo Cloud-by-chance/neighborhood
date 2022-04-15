@@ -34,6 +34,7 @@ dependencies {
 
 
 
+<<<<<<< HEAD
 //<<<<<<< HEAD
 	// JWT와 Spring Security 추가
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -47,6 +48,12 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
 //>>>>>>> master
+=======
+	// JWT와 Spring Security 추가
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+
+>>>>>>> fb4d659ce213727ce5037539e6d37a74786568f8
 
 	//롬복 추가! 2개가 필요
 	compileOnly 'org.projectlombok:lombok'
@@ -56,11 +63,16 @@ dependencies {
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
+<<<<<<< HEAD
 //<<<<<<< HEAD
 //=======
 	//JSON Parsing
 	dependencies { implementation 'com.google.code.gson:gson:2.8.7' }
 //>>>>>>> master
+=======
+	//JSON Parsing
+	dependencies { implementation 'com.google.code.gson:gson:2.8.7' }
+>>>>>>> fb4d659ce213727ce5037539e6d37a74786568f8
 
 }
 
