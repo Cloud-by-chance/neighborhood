@@ -37,6 +37,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/social/**",
             "/h2-console",
             "/api/**",
+            "/resources/**",
+            "/js/**",
             "/v1/**"
     };
 

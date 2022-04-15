@@ -17,7 +17,8 @@ var main = {
         var data = {
             post_name: $('#title').val(),
             user_id: $('#author').val(),
-            content: $('#content').val()
+            content: $('#content').val(),
+            board_id: $('#board').val()
         };
 
         $.ajax({
