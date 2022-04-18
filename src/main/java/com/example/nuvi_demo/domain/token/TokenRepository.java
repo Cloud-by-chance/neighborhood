@@ -1,6 +1,5 @@
-package com.example.nuvi_demo.domain.member;
+package com.example.nuvi_demo.domain.token;
 
-import com.example.nuvi_demo.Entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TokenRepository extends JpaRepository<Token, String> {

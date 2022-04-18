@@ -1,11 +1,14 @@
-package com.example.nuvi_demo.Entity;
+package com.example.nuvi_demo.domain.token;
 
+import com.example.nuvi_demo.Entity.TokenVo;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @ToString
 @Builder // builder를 사용할수 있게 합니다.
@@ -14,22 +17,26 @@ import java.util.Date;
 @NoArgsConstructor // 인자없는 생성자를 자동으로 생성합니다.
 @AllArgsConstructor // 인자를 모두 갖춘 생성자를 자동으로 생성합니다.
 @Table(name = "token")
+@DynamicUpdate
+@DynamicInsert
 public class Token {
-
     @Id
-    private String idx;
-
-    private String jwt;
     private String user_id;
-    private String refresh_tk;
-    private LocalDateTime create_dt;
-    private LocalDateTime update_dt;
+    private String idx;
+    private String jwt;
 
-    @Builder
-    public Token(String jwt, String user_id, String refresh_tk) {
-        this.jwt = jwt;
+    private String refresh_tk;
+
+    @Column(updatable = false,insertable = false)
+    private Timestamp timestamp;
+
+
+    public Token(String user_id, TokenVo tokenVo) {
         this.user_id = user_id;
-        this.refresh_tk = refresh_tk;
+        this.jwt = tokenVo.getJwt();
+        this.refresh_tk = tokenVo.getRefreshToken();
+        this.timestamp = Timestamp.valueOf(LocalDateTime.now());
     }
+
 }
 

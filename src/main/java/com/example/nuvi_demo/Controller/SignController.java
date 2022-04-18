@@ -14,6 +14,7 @@ import com.example.nuvi_demo.Exception.KakaoCodeException;
 import com.example.nuvi_demo.Exception.KakaoTokenException;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.config.Security.JwtTokenProvider;
+import com.example.nuvi_demo.domain.token.Token;
 import com.example.nuvi_demo.model.response.*;
 import com.example.nuvi_demo.service.user.KakaoAPIService;
 import com.example.nuvi_demo.service.user.ResponseService;
@@ -52,7 +53,7 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     private final PasswordEncoder passwordEncoder;
 
     @ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
-    @PostMapping(value = "/signin")
+    @PostMapping(value = "/login")
     public SingleResult<String> signin(@ApiParam(value = "회원 로그인 Token 발급", required = true) @RequestBody UserVo userVo) {
 
 //    public SingleResult<String> signin(@ApiParam(value = "회원ID : 이메일", required = true) @RequestParam String id,
@@ -69,7 +70,6 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
             throw new CEmailSigninFailedException();
 
         return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user_check.getUser_id()), user_check.getRoles()));
-
     }
 
     @ApiOperation(value = "가입", notes = "회원가입을 한다.")
@@ -98,13 +98,14 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
 
     @RequestMapping(value = "/kakaoLogin")
     public SingleResult<String> login(@RequestBody TokenVo tokenVo, HttpSession session){
-       // String access_Token = kakao.getKakaoAccessToken(code).orElseThrow(KakaoTokenException::new);
-        System.out.println(tokenVo.getAccessToken()+ tokenVo.getRefreshToken());
         HashMap<String, Object> userInfo = kakao.getUserInfo(tokenVo.getAccessToken());
         User user_check = userJpaRepo.findById(userInfo.get("id").toString()).orElseThrow(CEmailSigninFailedException::new);
         String jwtToken = jwtTokenProvider.createToken(String.valueOf(user_check.getUser_id()), user_check.getRoles());
-
-        kakao.saveToken(userInfo.get("id").toString(), jwtToken, tokenVo.getRefreshToken());
+        if (tokenVo.getJwt() == null) {
+            tokenVo.setJwt(jwtToken);
+        }
+        Token token = new Token(userInfo.get("id").toString(), tokenVo);
+        kakao.saveToken(token);
 
         return responseService.getSingleResult(jwtToken);
     }

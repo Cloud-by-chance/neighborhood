@@ -1,22 +1,14 @@
 
 package com.example.nuvi_demo.service.user;
 
-<<<<<<< HEAD:src/main/java/com/example/nuvi_demo/service/user/KakaoAPIService.java
-import com.example.nuvi_demo.domain.Entity.User;
-import com.example.nuvi_demo.Repo.UserJpaRepo;
-import com.example.nuvi_demo.domain.member.Member;
-import com.example.nuvi_demo.domain.member.MemberRepository;
-import com.example.nuvi_demo.domain.personal.kakaoLogin.security.SecurityInfo;
-=======
-import com.example.nuvi_demo.Entity.Token;
+import com.example.nuvi_demo.Entity.TokenVo;
+import com.example.nuvi_demo.domain.token.Token;
 import com.example.nuvi_demo.Entity.User;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.domain.member.Member;
 import com.example.nuvi_demo.domain.member.MemberRepository;
-import com.example.nuvi_demo.domain.member.TokenRepository;
+import com.example.nuvi_demo.domain.token.TokenRepository;
 import com.example.nuvi_demo.personal.kakaoLogin.security.SecurityInfo;
-import com.google.gson.JsonArray;
->>>>>>> fb4d659ce213727ce5037539e6d37a74786568f8:src/main/java/com/example/nuvi_demo/service/KakaoAPIService.java
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -25,11 +17,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
@@ -44,11 +39,12 @@ public class KakaoAPIService {
     @Autowired
     private final SecurityInfo securityInfo;
     @Autowired
-    private  final TokenRepository tokenRepository;
+    private final TokenRepository tokenRepository;
     @Autowired
     private final UserJpaRepo userJpaRepo;
     @Autowired
     private final PasswordEncoder passwordEncoder;
+
     public Optional<String> getKakaoAccessToken(String code) {
         String accessToken = "";
         String refreshToken = "";
@@ -196,13 +192,14 @@ public class KakaoAPIService {
 
     }
 
-    public void saveToken(String id, String jwtToken, String refreshToken) {
+    public void saveToken(Token token) {
+        System.out.println(token.toString());
         tokenRepository.save(Token.builder()
-                        .idx(Base64.getEncoder().encodeToString((id+jwtToken).getBytes(StandardCharsets.UTF_8)))
-                        .jwt(jwtToken)
-                        .refresh_tk(refreshToken)
-                        .user_id(id)
-                        .build());
+                .idx(Base64.getEncoder().encodeToString((token.getUser_id() + token.getJwt()).getBytes(StandardCharsets.UTF_8)))
+                .jwt(token.getJwt())
+                .refresh_tk(token.getRefresh_tk())
+                .user_id(token.getUser_id())
+                .build());
     }
 }
 
