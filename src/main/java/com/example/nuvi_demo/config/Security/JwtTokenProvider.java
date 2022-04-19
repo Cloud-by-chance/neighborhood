@@ -5,6 +5,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Encoders;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,7 +16,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.crypto.SecretKey;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +29,7 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
     @Value("spring.jwt.secret")
     private String secretKey;
+    private SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     private long tokenValidMilisecond = 1000L * 60 * 60; // 1시간만 토큰 유효
     private long refreshTokenValidMillisecond = 60 * 60 * 24 * 7 * 1000L; //1주일 유효 기간.
@@ -32,7 +37,7 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
     @PostConstruct
     protected void init() { //init은 최초 실행시만 실행됨
-        secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        secretKey = Encoders.BASE64.encode(key.getEncoded());
     }
 
     // Jwt 토큰 생성
