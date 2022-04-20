@@ -92,10 +92,10 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     public Object informationToken(String jwt){
         Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt);
 
-        log.info("getsubject: "+claims.getBody().getSubject());
-        log.info("getAudience: "+claims.getBody().getAudience());
-        log.info("getId: "+claims.getBody().getId());
-        log.info("getExpiration: "+claims.getBody().getExpiration().before(new Date()));
-        return claims.getBody();
+//        log.info("getsubject: "+claims.getBody().getSubject());
+//        log.info("getAudience: "+claims.getBody().getAudience());
+//        log.info("getId: "+claims.getBody().getId());
+//        log.info("getExpiration: "+claims.getBody().getExpiration().before(new Date()));
+        return claims.getBody().getSubject(); //subject가 user id를 담고 있음
     }
 }
