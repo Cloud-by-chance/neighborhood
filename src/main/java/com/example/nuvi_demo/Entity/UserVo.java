@@ -1,4 +1,4 @@
-package com.example.nuvi_demo.domain.Entity;
+package com.example.nuvi_demo.Entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -18,6 +18,6 @@ public class UserVo {
     @JsonProperty
     private String password;
 
-    @JsonProperty
-    private String nickName;
+//    @JsonProperty
+//    private String nickName;
 }

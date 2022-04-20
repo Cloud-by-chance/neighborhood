@@ -1,4 +1,4 @@
-package com.example.nuvi_demo.domain.Entity;
+package com.example.nuvi_demo.Entity;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
