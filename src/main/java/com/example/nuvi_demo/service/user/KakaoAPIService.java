@@ -191,9 +191,9 @@ public class KakaoAPIService {
     public void saveToken(Token token) {
         System.out.println(token.toString());
         tokenRepository.save(Token.builder()
-                .idx(Base64.getEncoder().encodeToString((token.getUser_id() + token.getJwt()).getBytes(StandardCharsets.UTF_8)))
-                .jwt(token.getJwt())
-                .refresh_tk(token.getRefresh_tk())
+                .idx(Base64.getEncoder().encodeToString((token.getUser_id() + token.getAccess_token()).getBytes(StandardCharsets.UTF_8)))
+                .Access_token(token.getAccess_token())
+                .Refresh_token(token.getRefresh_token())
                 .user_id(token.getUser_id())
                 .build());
     }

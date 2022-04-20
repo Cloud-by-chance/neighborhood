@@ -5,8 +5,6 @@ import com.example.nuvi_demo.Entity.TokenVo;
 import com.example.nuvi_demo.domain.Entity.User;
 import com.example.nuvi_demo.domain.Entity.UserVo;
 import com.example.nuvi_demo.Exception.CEmailSigninFailedException;
-import com.example.nuvi_demo.Exception.KakaoCodeException;
-import com.example.nuvi_demo.Exception.KakaoTokenException;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.config.Security.JwtTokenProvider;
 import com.example.nuvi_demo.domain.token.Token;
@@ -19,14 +17,15 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -92,17 +91,23 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     }
 
     @RequestMapping(value = "/kakaoLogin")
-    public SingleResult<String> login(@RequestBody TokenVo tokenVo, HttpSession session){
+    public ListResult<String> login(@RequestBody TokenVo tokenVo){
         HashMap<String, Object> userInfo = kakao.getUserInfo(tokenVo.getAccessToken());
         User user_check = userJpaRepo.findById(userInfo.get("id").toString()).orElseThrow(CEmailSigninFailedException::new);
+
         String jwtToken = jwtTokenProvider.createToken(String.valueOf(user_check.getUser_id()), user_check.getRoles());
         if (tokenVo.getJwt() == null) {
             tokenVo.setJwt(jwtToken);
         }
+
         Token token = new Token(userInfo.get("id").toString(), tokenVo);
         kakao.saveToken(token);
 
-        return responseService.getSingleResult(jwtToken);
+        List<String> res = new ArrayList<>();
+        res.add(jwtToken);
+        res.add(userInfo.get("nickName").toString());
+
+        return responseService.getListResult(res);
     }
 
 }
