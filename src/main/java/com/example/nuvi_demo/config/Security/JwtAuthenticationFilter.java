@@ -2,6 +2,7 @@ package com.example.nuvi_demo.config.Security;
 
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -11,9 +12,11 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 //Jwt가 유요한 토큰인지 판단하는 필터이다. UserPasswordAuthentication 필터 앞에 설정할 내용이다.
+@Slf4j
 public class JwtAuthenticationFilter extends GenericFilterBean {
     //GenericFilterBean란 Filter의 확장 버전으로 Spring의 설정 정보 사용 가능!
 
@@ -35,6 +38,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) request); //resolve토큰은 헤더를 분리, 토큰만 가져온다.
         if (token != null && jwtTokenProvider.validateToken(token)) { //토큰이 있고 유효기간이 만료되지 않았다면
             Authentication auth = jwtTokenProvider.getAuthentication(token); //인증 정보를 가져온다.
+//            log.info(auth.toString());
             SecurityContextHolder.getContext().setAuthentication(auth); //인증한 내용을 Context 홀더에 담아준다.
         }
         filterChain.doFilter(request, response); //요청, 응답에 대한 필터링 진행
