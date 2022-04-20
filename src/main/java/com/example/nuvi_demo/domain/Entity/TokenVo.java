@@ -1,4 +1,4 @@
-package com.example.nuvi_demo.Entity;
+package com.example.nuvi_demo.domain.Entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
