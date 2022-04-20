@@ -25,7 +25,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
+import java.nio.charset.StandardCharsets;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -51,21 +55,25 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     @ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
     @PostMapping(value = "/signin")
     public SingleResult<String> signin(@ApiParam(value = "회원 로그인 Token 발급", required = true) @RequestBody UserVo userVo) {
+//    public ListResult<String> signin(@ApiParam(value = "회원 로그인 Token 발급", required = true) @RequestBody UserVo userVo) {
         User user_check = userJpaRepo.findById(userVo.getId()).orElseThrow(CEmailSigninFailedException::new);
         if (!passwordEncoder.matches(userVo.getPassword(),user_check.getPassword() )) //저장된 password와 받아온 password 비교
             throw new CEmailSigninFailedException();
 
         //토큰 2개를 return하기 위한 List return
         ArrayList<String> jwt =new ArrayList<String>();
-        String refresh_token = jwtTokenProvider.createRefreshToken();
+        String refresh_token = jwtTokenProvider.createRefreshToken(String.valueOf(user_check.getUser_id()));
         String access_token= jwtTokenProvider.createToken(String.valueOf(user_check.getUser_id()), user_check.getRoles());
 
         jwt.add(refresh_token);
         jwt.add(access_token);
         //Auth 정보 저장을 위해 토큰 값과 userID를 가져와 builder해준다.
+
         authRepo.save(Auth.builder().Refresh_token(refresh_token)
+                .idx(Base64.getEncoder().encodeToString((userVo.getId()+access_token).getBytes(StandardCharsets.UTF_8)))
                 .Access_token(access_token)
                 .user_id(userVo.getId())
+                .timestamp(Timestamp.valueOf(LocalDateTime.now()))
                 .build());
 //        authRepo.getById("Refresh_token");
         //jwt에 Access 토큰과 refresh 토큰을 넣고 Tostring으로 보내준다.
@@ -76,32 +84,50 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     @ApiOperation(value = "가입", notes = "회원가입을 한다.")
     @PostMapping(value = "/signup")
     public CommonResult signup(@ApiParam(value = "Api 요청 내용", required = true) @RequestBody User user2) {
+//    public CommonResult signin(@ApiParam(value = "회원ID : 이메일", required = true) @RequestParam String id,
+//                               @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
+//                               @ApiParam(value = "이름", required = true) @RequestParam String name) {
+
 
         userJpaRepo.save(User.builder()
                 .user_id(user2.getUser_id())
                 .password(passwordEncoder.encode(user2.getPassword()))
                 .nick_name(user2.getNick_name())
                 .email(user2.getEmail())
+//                .age(user2.getAge())
                 .roles(Collections.singletonList("ROLE_USER"))
                 .build());
         return responseService.getSuccessResult();
     }
-    //Refresh 확인용
+
     @Transactional
     @PostMapping(value = "/refreshtoken")
     public SingleResult<String> refreshtoken(String token) { //에러가 뜬다면 refresh 토큰을 받음 해당 토큰으로 재 발급 받는다.
-        String userid = authRepo.findById(token).get().getUser_id();
+
+//        String userid = authRepo.findById(token).get().getUser_id();
+        String userid = jwtTokenProvider.informationToken(token).toString(); //refresh 토큰에 있는 유저 정보를 가져옴
         String access_token = jwtTokenProvider.createToken(String.valueOf(userid), userJpaRepo.findById(userid).get().getRoles());
-        log.info(jwtTokenProvider.informationToken(token).toString());
-        log.info(authRepo.findById(token).toString());
+        log.info("유저 정보 받아오나?: " + jwtTokenProvider.informationToken(token));
+        log.info(authRepo.findById(userid).toString());
         if (jwtTokenProvider.validateToken(token)) { //만약 refresh 토큰의 기간이 유효하면 새 access 토큰을 발행
-            authRepo.save(Auth.builder().Refresh_token(token).Access_token(access_token).user_id(userid).build());
+//            authRepo.save(Auth.builder().Refresh_token(token).Access_token(access_token).user_id(userid).build());
+            authRepo.save(Auth.builder().Refresh_token(token)
+                    .idx(Base64.getEncoder().encodeToString((userid + access_token).getBytes(StandardCharsets.UTF_8)))
+                    .Access_token(access_token)
+                    .user_id(userid)
+//                    .timestamp(Timestamp.valueOf(LocalDateTime.now())) //timestamp는 업데이트 되지 않는다.
+                    .build());
         } else {
-            authRepo.deleteById(token); // 유효기간이 지난 토큰을 삭제 후 다시 생성
-            String refresh_token = jwtTokenProvider.createRefreshToken();
-            authRepo.save(Auth.builder().Refresh_token(refresh_token).Access_token(access_token).user_id(userid).build());
+            authRepo.deleteById(userid); // 유효기간이 지난 토큰을 삭제 후 다시 생성
+            String refresh_token = jwtTokenProvider.createRefreshToken(userid);
+            authRepo.save(Auth.builder().Refresh_token(token)
+                    .idx(Base64.getEncoder().encodeToString((userid + access_token).getBytes(StandardCharsets.UTF_8)))
+                    .Access_token(access_token)
+                    .user_id(userid)
+                    .timestamp(Timestamp.valueOf(LocalDateTime.now())) //삭제후 생성이므로 timestamp도 재설정
+                    .build());
         }
-        return responseService.getSingleResult(access_token); //새로 생성된 access_token 발행
+        return responseService.getSingleResult(access_token);
     }
 
     @RequestMapping(value = "/kakaoLogin")

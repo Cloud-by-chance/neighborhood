@@ -3,11 +3,14 @@ package com.example.nuvi_demo.Entity;
 //Auth 정보 즉 Token을 위한 Entity
 
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.sql.Timestamp;
 
 
 @ToString
@@ -17,18 +20,22 @@ import javax.persistence.Table;
 @NoArgsConstructor // 인자없는 생성자를 자동으로 생성합니다.
 @AllArgsConstructor // 인자를 모두 갖춘 생성자를 자동으로 생성합니다.
 @Table(name = "token") // 'token' 테이블과 매핑됨을 명시
+@DynamicUpdate
+@DynamicInsert
 public class Auth {
     @Id
-    private String Refresh_token;
+    private String user_id;
 
+    @Column
+    private String idx;
     @Column
     private String Access_token;
 
     @Column(unique = true)
-    private String user_id;
+    private String Refresh_token;
 
-    public void update (String Access_token){
-        this.Access_token = Access_token; //업데이트는 Access token만 업데이트 하면 된다.
-    }
+    @Column(updatable = false,insertable = true)
+    private Timestamp timestamp;
+
 
 }

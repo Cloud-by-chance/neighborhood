@@ -51,10 +51,12 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     }
 
     //Refresh 토큰 생성
-    public String createRefreshToken(){
+    public String createRefreshToken(String userPk){
         Date now =new Date(); //만료 시간만 넣어준다
+        Claims claims = Jwts.claims().setSubject(userPk);
         return Jwts.builder()
                 .setIssuedAt(now)
+                .setClaims(claims)
                 .setExpiration(new Date(now.getTime() + refreshTokenValidMillisecond))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
