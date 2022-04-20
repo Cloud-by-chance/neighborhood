@@ -41,7 +41,7 @@ public class PostRepositoryTest {
     @Transactional
     public void createTest() {
         // given
-        String post_name = "Test Post";
+        String post_name = "Test Post 2";
         String content = "Posting test number one.";
         String user_id = "test2";
         Long board_id = 5L;

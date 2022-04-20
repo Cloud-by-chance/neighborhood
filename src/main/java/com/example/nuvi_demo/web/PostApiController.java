@@ -5,6 +5,7 @@ import com.example.nuvi_demo.service.post.PostService;
 import com.example.nuvi_demo.web.dto.member.MemberResponseDto;
 import com.example.nuvi_demo.web.dto.member.MemberSaveRequestDto;
 import com.example.nuvi_demo.web.dto.member.MemberUpdateRequestDto;
+import com.example.nuvi_demo.web.dto.post.PostListResponseDto;
 import com.example.nuvi_demo.web.dto.post.PostResponseDto;
 import com.example.nuvi_demo.web.dto.post.PostSaveRequestDto;
 import com.example.nuvi_demo.web.dto.post.PostUpdateRequestDto;
@@ -12,10 +13,17 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 public class PostApiController {
     private final PostService postService;
+
+    @GetMapping("/api/v1/posts")
+    public List<PostListResponseDto> read() {
+        return postService.findAllDesc();
+    }
 
     @PostMapping("/api/v1/post")
     public Long save(@RequestBody PostSaveRequestDto requestDto) {

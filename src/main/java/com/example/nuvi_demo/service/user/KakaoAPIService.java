@@ -1,22 +1,17 @@
 
 package com.example.nuvi_demo.service.user;
 
-<<<<<<< HEAD:src/main/java/com/example/nuvi_demo/service/user/KakaoAPIService.java
 import com.example.nuvi_demo.domain.Entity.User;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.domain.member.Member;
 import com.example.nuvi_demo.domain.member.MemberRepository;
 import com.example.nuvi_demo.domain.personal.kakaoLogin.security.SecurityInfo;
-=======
 import com.example.nuvi_demo.Entity.Token;
-import com.example.nuvi_demo.Entity.User;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.domain.member.Member;
 import com.example.nuvi_demo.domain.member.MemberRepository;
 import com.example.nuvi_demo.domain.member.TokenRepository;
-import com.example.nuvi_demo.personal.kakaoLogin.security.SecurityInfo;
 import com.google.gson.JsonArray;
->>>>>>> fb4d659ce213727ce5037539e6d37a74786568f8:src/main/java/com/example/nuvi_demo/service/KakaoAPIService.java
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

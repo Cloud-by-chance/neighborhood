@@ -1,14 +1,9 @@
 package com.example.nuvi_demo.Controller;
 
 
-<<<<<<< HEAD
 import com.example.nuvi_demo.domain.Entity.User;
 import com.example.nuvi_demo.domain.Entity.UserVo;
-=======
 import com.example.nuvi_demo.Entity.TokenVo;
-import com.example.nuvi_demo.Entity.User;
-import com.example.nuvi_demo.Entity.UserVo;
->>>>>>> fb4d659ce213727ce5037539e6d37a74786568f8
 import com.example.nuvi_demo.Exception.CEmailSigninFailedException;
 import com.example.nuvi_demo.Exception.KakaoCodeException;
 import com.example.nuvi_demo.Exception.KakaoTokenException;
