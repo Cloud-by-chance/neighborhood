@@ -1,7 +1,7 @@
 
 package com.example.nuvi_demo.service.user;
 
-import com.example.nuvi_demo.domain.Entity.User;
+import com.example.nuvi_demo.Entity.User;
 import com.example.nuvi_demo.domain.personal.kakaoLogin.security.SecurityInfo;
 import com.example.nuvi_demo.domain.token.Token;
 import com.example.nuvi_demo.Repo.UserJpaRepo;

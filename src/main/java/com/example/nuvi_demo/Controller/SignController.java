@@ -2,11 +2,9 @@ package com.example.nuvi_demo.Controller;
 
 
 import com.example.nuvi_demo.Entity.TokenVo;
-import com.example.nuvi_demo.domain.Entity.User;
-import com.example.nuvi_demo.domain.Entity.UserVo;
+import com.example.nuvi_demo.Entity.User;
+import com.example.nuvi_demo.Entity.UserVo;
 import com.example.nuvi_demo.Exception.CEmailSigninFailedException;
-import com.example.nuvi_demo.Exception.KakaoCodeException;
-import com.example.nuvi_demo.Exception.KakaoTokenException;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.config.Security.JwtTokenProvider;
 import com.example.nuvi_demo.domain.token.Token;
@@ -19,7 +17,6 @@ import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 

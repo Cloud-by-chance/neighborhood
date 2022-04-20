@@ -2,7 +2,7 @@ package com.example.nuvi_demo.Repo;
 
 
 
-import com.example.nuvi_demo.domain.Entity.User;
+import com.example.nuvi_demo.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserJpaRepo extends JpaRepository<User, String> {
