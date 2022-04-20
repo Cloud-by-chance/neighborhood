@@ -23,18 +23,18 @@ public class Token {
     @Id
     private String user_id;
     private String idx;
-    private String jwt;
-
-    private String refresh_tk;
-
+//    private String jwt;
+    private  String Access_token;
+//    private String refresh_tk;
+    private String Refresh_token;
     @Column(updatable = false,insertable = false)
     private Timestamp timestamp;
 
 
     public Token(String user_id, TokenVo tokenVo) {
         this.user_id = user_id;
-        this.jwt = tokenVo.getJwt();
-        this.refresh_tk = tokenVo.getRefreshToken();
+        this.Access_token = tokenVo.getJwt();
+        this.Refresh_token = tokenVo.getRefreshToken();
         this.timestamp = Timestamp.valueOf(LocalDateTime.now());
     }
 
