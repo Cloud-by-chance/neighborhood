@@ -11,7 +11,7 @@ pipeline {
     stage('Checkout Application Git Branch') {
         steps {
                 git url: 'https://github.com/Cloud-by-chance/neighborhood-back.git',
-                branch: 'main'
+                branch: 'master'
         }
         post {
                 failure {
