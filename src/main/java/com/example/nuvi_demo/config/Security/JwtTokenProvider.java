@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -21,13 +22,14 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
+@Slf4j
 public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
     @Value("spring.jwt.secret")
     private String secretKey;
 
-    private long tokenValidMilisecond = 1000L * 60 * 60; // 1시간만 토큰 유효
-    private long refreshTokenValidMillisecond = 60 * 60 * 24 * 7 * 1000L; //1주일 유효 기간.
+    private long tokenValidMilisecond = 1000L * 2 * 60; // 1시간만 토큰 유효
+    private long refreshTokenValidMillisecond = 60 * 60 * 24 * 1000L; //하루 유효 기간.
     private final UserDetailsService userDetailsService; // 유저 정보를 저장하기 위한 객체 생성
 
     @PostConstruct
@@ -37,7 +39,6 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
     // Jwt 토큰 생성
     public String createToken(String userPk, List<String> roles){  //
-
         Claims claims = Jwts.claims().setSubject(userPk); //유저 정보 저장용 claims
         claims.put("roles", roles);//역할을 넣는다.
         Date now = new Date();
@@ -49,11 +50,13 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
                 .compact();
     }
 
-    //재발급 토큰 생성
-    public String createRefreshToken(){
-        Date now =new Date();
+    //Refresh 토큰 생성
+    public String createRefreshToken(String userPk){
+        Date now =new Date(); //만료 시간만 넣어준다
+        Claims claims = Jwts.claims().setSubject(userPk);
         return Jwts.builder()
                 .setIssuedAt(now)
+                .setClaims(claims)
                 .setExpiration(new Date(now.getTime() + refreshTokenValidMillisecond))
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
@@ -79,9 +82,20 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     public boolean validateToken(String jwtToken) {
         try {
             Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);//파싱으로 만료일자 확인.
+
             return !claims.getBody().getExpiration().before(new Date());
-        } catch (Exception e) {
+        } catch (Exception e) { //기간 만료시 여기로 온다 -> 재발급 토큰을 db에서 확인 후 create token을 return
+            log.info("기간이 만료된 토큰입니다.");
             return false;
         }
+    }
+    public Object informationToken(String jwt){
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwt);
+
+//        log.info("getsubject: "+claims.getBody().getSubject());
+//        log.info("getAudience: "+claims.getBody().getAudience());
+//        log.info("getId: "+claims.getBody().getId());
+//        log.info("getExpiration: "+claims.getBody().getExpiration().before(new Date()));
+        return claims.getBody().getSubject(); //subject가 user id를 담고 있음
     }
 }

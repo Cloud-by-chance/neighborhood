@@ -1,6 +1,7 @@
 
 package com.example.nuvi_demo.service.user;
 
+<<<<<<< HEAD
 import com.example.nuvi_demo.domain.Entity.User;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.domain.member.Member;
@@ -12,6 +13,15 @@ import com.example.nuvi_demo.domain.member.Member;
 import com.example.nuvi_demo.domain.member.MemberRepository;
 import com.example.nuvi_demo.domain.member.TokenRepository;
 import com.google.gson.JsonArray;
+=======
+import com.example.nuvi_demo.Entity.User;
+import com.example.nuvi_demo.domain.personal.kakaoLogin.security.SecurityInfo;
+import com.example.nuvi_demo.domain.token.Token;
+import com.example.nuvi_demo.Repo.UserJpaRepo;
+import com.example.nuvi_demo.domain.member.Member;
+import com.example.nuvi_demo.domain.member.MemberRepository;
+import com.example.nuvi_demo.domain.token.TokenRepository;
+>>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -39,11 +49,12 @@ public class KakaoAPIService {
     @Autowired
     private final SecurityInfo securityInfo;
     @Autowired
-    private  final TokenRepository tokenRepository;
+    private final TokenRepository tokenRepository;
     @Autowired
     private final UserJpaRepo userJpaRepo;
     @Autowired
     private final PasswordEncoder passwordEncoder;
+
     public Optional<String> getKakaoAccessToken(String code) {
         String accessToken = "";
         String refreshToken = "";
@@ -191,13 +202,14 @@ public class KakaoAPIService {
 
     }
 
-    public void saveToken(String id, String jwtToken, String refreshToken) {
+    public void saveToken(Token token) {
+        System.out.println(token.toString());
         tokenRepository.save(Token.builder()
-                        .idx(Base64.getEncoder().encodeToString((id+jwtToken).getBytes(StandardCharsets.UTF_8)))
-                        .jwt(jwtToken)
-                        .refresh_tk(refreshToken)
-                        .user_id(id)
-                        .build());
+                .idx(Base64.getEncoder().encodeToString((token.getUser_id() + token.getAccess_token()).getBytes(StandardCharsets.UTF_8)))
+                .Access_token(token.getAccess_token())
+                .Refresh_token(token.getRefresh_token())
+                .user_id(token.getUser_id())
+                .build());
     }
 }
 

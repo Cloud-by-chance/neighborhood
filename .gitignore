@@ -198,12 +198,11 @@ $RECYCLE.BIN/
 # DB
 build/resources/main/application-aws.yaml
 src/main/resources/application-aws.yaml
-
+src/main/resources/application.yaml
 #Kakao info
 src/main/java/com/example/nuvi_demo/personal/
 
 # Oauth
 application-oauth.yaml
-
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,intellij,java
 

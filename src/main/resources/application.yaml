@@ -1,5 +1,8 @@
 #LOAD profile aws
 spring:
+#  h2:
+#    console:
+#      enabled: true
   profiles:
     include: aws
   # auto reload
@@ -31,6 +34,6 @@ logging:
         type:
           descriptor:
             sql: trace
-# 포트 번호 지정
-server:
-  port: 8081
+## 포트 번호 지정
+#server:
+#  port: 8081
