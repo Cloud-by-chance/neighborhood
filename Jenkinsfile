@@ -5,9 +5,6 @@ pipeline {
     dockerHubRegistryCredential = 'docker-hub-credential'
     githubCredential = 'git-ssh'
   }
-  tools{
-	gradle "GRADLE_LATEST"
-  }
 
   stages {
 
@@ -38,6 +35,7 @@ pipeline {
             }
         }
         steps {
+	    sh './gradlew clean bootJar'
             sh 'gradle clean build -b build.gradle'
         }
     }
