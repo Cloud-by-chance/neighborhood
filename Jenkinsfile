@@ -22,11 +22,6 @@ pipeline {
                 }
         }
     }
-    stage('Gradle version check'){
-	steps{
-	    sh 'gradle --version'
-	}
-    }
     stage('Build and test') {
         agent {
             docker {
@@ -35,8 +30,8 @@ pipeline {
             }
         }
         steps {
-	    sh 'sudo ./gradlew clean bootJar'
-            sh 'sudo gradle clean build -b build.gradle'
+	    /*sh './gradlew clean bootJar'*/
+            sh 'gradle clean build -b build.gradle'
         }
     }
     stage('Docker Image Build') {
