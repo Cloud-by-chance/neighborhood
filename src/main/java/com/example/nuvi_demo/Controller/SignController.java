@@ -109,11 +109,11 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
 
 //        String userid = authRepo.findById(token).get().getUser_id();
         String userid = jwtTokenProvider.informationToken(token).toString(); //refresh 토큰에 있는 유저 정보를 가져옴
-//        log.info("유저 ? : "+ userid);
-//        log.info("유저 역할? : "+ userJpaRepo.findById(userid).toString());
+        log.info("유저 ? : "+ userid);
+        log.info("유저 역할? : "+ userJpaRepo.findById(userid).toString());
 
         String access_token = jwtTokenProvider.createToken(String.valueOf(userid), userJpaRepo.findById(userid).get().getRoles());
-//        log.info("유저 정보? : " + jwtTokenProvider.informationToken(token));
+        log.info("유저 정보? : " + jwtTokenProvider.informationToken(token));
 
         if (jwtTokenProvider.validateToken(token)) { //만약 refresh 토큰의 기간이 유효하면 새 access 토큰을 발행
 //            authRepo.save(Auth.builder().Refresh_token(token).Access_token(access_token).user_id(userid).build());
