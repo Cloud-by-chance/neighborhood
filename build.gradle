@@ -1,3 +1,5 @@
+buildscript{
+
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
@@ -8,7 +10,6 @@ configurations {
 	}
 }
 
-buildscript{
 repositories {
 		mavenLocal()
 		maven { url 'https://maven.aliyun.com/repository/google/' }
@@ -89,8 +90,8 @@ dependencies {
 
 //>>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
 
-
 }
+
 plugins {
 	id 'java'
 }
