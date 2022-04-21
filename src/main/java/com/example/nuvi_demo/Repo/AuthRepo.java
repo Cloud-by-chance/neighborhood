@@ -1,6 +1,6 @@
 package com.example.nuvi_demo.Repo;
 
-import com.example.nuvi_demo.Entity.Auth;
+import com.example.nuvi_demo.domain.Entity.Auth;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

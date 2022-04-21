@@ -33,7 +33,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	// JWT와 Spring Security 추가
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
@@ -46,22 +46,22 @@ dependencies {
 
 	// JWT와 Spring Security 추가
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-=======
+//=======
 
 	//Spring Security 추가
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	//jwt
->>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
+//>>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
 //	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
 //	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
+//<<<<<<< HEAD
+//=======
+//
+//>>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
 	//롬복 추가! 2개가 필요
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -70,17 +70,17 @@ dependencies {
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	//JSON Parsing
 	dependencies { implementation 'com.google.code.gson:gson:2.8.7' }
 	//JSON Parsing
 	dependencies { implementation 'com.google.code.gson:gson:2.8.7' }
-=======
+//=======
 
 	//JSON Parsing
 	dependencies { implementation 'com.google.code.gson:gson:2.8.7' }
 
->>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
+//>>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
 
 }
 

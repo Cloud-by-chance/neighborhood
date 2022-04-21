@@ -1,12 +1,11 @@
 package com.example.nuvi_demo.domain.token;
 
-import com.example.nuvi_demo.Entity.TokenVo;
+import com.example.nuvi_demo.domain.Entity.TokenVo;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 

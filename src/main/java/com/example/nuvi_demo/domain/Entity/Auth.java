@@ -1,4 +1,4 @@
-package com.example.nuvi_demo.Entity;
+package com.example.nuvi_demo.domain.Entity;
 
 //Auth 정보 즉 Token을 위한 Entity
 

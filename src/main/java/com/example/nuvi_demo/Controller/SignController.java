@@ -1,16 +1,13 @@
 package com.example.nuvi_demo.Controller;
 
 
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import com.example.nuvi_demo.domain.Entity.User;
 import com.example.nuvi_demo.domain.Entity.UserVo;
-import com.example.nuvi_demo.Entity.TokenVo;
-=======
-import com.example.nuvi_demo.Entity.Auth;
-import com.example.nuvi_demo.Entity.TokenVo;
-import com.example.nuvi_demo.Entity.User;
-import com.example.nuvi_demo.Entity.UserVo;
->>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
+import com.example.nuvi_demo.domain.Entity.TokenVo;
+//=======
+import com.example.nuvi_demo.domain.Entity.Auth;
+//>>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
 import com.example.nuvi_demo.Exception.CEmailSigninFailedException;
 import com.example.nuvi_demo.Repo.AuthRepo;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
@@ -28,8 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-
-import javax.servlet.http.HttpSession;
 
 import javax.transaction.Transactional;
 import java.nio.charset.StandardCharsets;
