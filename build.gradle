@@ -1,9 +1,12 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
-
-buildscript{
 
 configurations {
 	compileOnly {
@@ -12,22 +15,10 @@ configurations {
 }
 
 repositories {
-		mavenLocal()
-		maven { url 'https://maven.aliyun.com/repository/google/' }
-		maven { url 'https://maven.aliyun.com/repository/public/' }
-		maven { url 'https://maven.aliyun.com/repository/spring/' }
-		maven { url 'https://maven.aliyun.com/repository/gradle-plugin/' }
-		maven { url 'https://maven.aliyun.com/repository/spring-plugin/' }
-		maven {
-			url "https://plugins.gradle.org/m2/"
-		}
 	mavenCentral()
 }
 
 dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.6")
-		classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
-}	
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 //	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
@@ -92,14 +83,6 @@ dependencies {
 //>>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
 
 }
-
-plugins {
-	id 'java'
-}
-
-apply plugin: "org.springframework.boot"
-apply plugin: "io.spring.dependency-management"
-
 
 test {
 	useJUnitPlatform()
