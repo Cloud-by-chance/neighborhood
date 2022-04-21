@@ -5,6 +5,9 @@ pipeline {
     dockerHubRegistryCredential = 'docker-hub-credential'
     githubCredential = 'git-ssh'
   }
+  tools{
+	gradle "GRADLE_LATEST"
+  }
 
   stages {
 
@@ -21,6 +24,11 @@ pipeline {
                   echo 'Repository clone success !'
                 }
         }
+    }
+    stage('Gradle version check'){
+	steps{
+	    sh 'gradle --version'
+	}
     }
     stage('Build and test') {
         agent {
