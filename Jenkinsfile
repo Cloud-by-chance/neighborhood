@@ -30,7 +30,7 @@ pipeline {
             }
         }
         steps {
-	    sh './gradlew build'
+	    sh 'sudo ./gradlew build'
             /*sh 'gradle clean build -b build.gradle'*/
         }
     }
