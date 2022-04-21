@@ -152,6 +152,7 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
         List<String> res = new ArrayList<>();
         res.add(jwtToken);
         res.add(userInfo.get("nickName").toString());
+        res.add(userInfo.get("id").toString());
 
         return responseService.getListResult(res);
     }

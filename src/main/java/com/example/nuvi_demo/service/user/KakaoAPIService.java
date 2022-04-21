@@ -154,7 +154,7 @@ public class KakaoAPIService {
                     .user_id(userInfo.get("id").toString())
                     .password(passwordEncoder.encode(userInfo.get("id").toString() + accessToken))
                     .nick_name(userInfo.get("nickName").toString())
-                    //.email(userInfo.getEmail())
+                    //.email("sdf")
 //                .age(user2.getAge())
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build());
