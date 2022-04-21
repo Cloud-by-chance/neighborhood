@@ -35,8 +35,8 @@ pipeline {
             }
         }
         steps {
-	    sh './gradlew clean bootJar'
-            sh 'gradle clean build -b build.gradle'
+	    sh 'sudo ./gradlew clean bootJar'
+            sh 'sudo gradle clean build -b build.gradle'
         }
     }
     stage('Docker Image Build') {
