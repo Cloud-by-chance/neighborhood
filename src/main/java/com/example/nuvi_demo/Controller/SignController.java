@@ -59,14 +59,14 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     @PostMapping(value = "/signin")
     public SingleResult<String> signin(@ApiParam(value = "회원 로그인 Token 발급", required = true) @RequestBody UserVo userVo) {
 //    public ListResult<String> signin(@ApiParam(value = "회원 로그인 Token 발급", required = true) @RequestBody UserVo userVo) {
-        User user_check = userJpaRepo.findById(userVo.getId()).orElseThrow(CEmailSigninFailedException::new);
-        if (!passwordEncoder.matches(userVo.getPassword(),user_check.getPassword() )) //저장된 password와 받아온 password 비교
+        User userCheck = userJpaRepo.findById(userVo.getId()).orElseThrow(CEmailSigninFailedException::new);
+        if (!passwordEncoder.matches(userVo.getPassword(),userCheck.getPassword() )) //저장된 password와 받아온 password 비교
             throw new CEmailSigninFailedException();
 
         //토큰 2개를 return하기 위한 List return
         ArrayList<String> jwt =new ArrayList<String>();
-        String refresh_token = jwtTokenProvider.createRefreshToken(String.valueOf(user_check.getUser_id()));
-        String access_token= jwtTokenProvider.createToken(String.valueOf(user_check.getUser_id()), user_check.getRoles());
+        String refresh_token = jwtTokenProvider.createRefreshToken(String.valueOf(userCheck.getUser_id()));
+        String access_token= jwtTokenProvider.createToken(String.valueOf(userCheck.getUser_id()), userCheck.getRoles());
 
         jwt.add(refresh_token);
         jwt.add(access_token);
@@ -139,9 +139,10 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     @RequestMapping(value = "/kakaoLogin")
     public ListResult<String> login(@RequestBody TokenVo tokenVo){
         HashMap<String, Object> userInfo = kakao.getUserInfo(tokenVo.getAccessToken());
-        User user_check = userJpaRepo.findById(userInfo.get("id").toString()).orElseThrow(CEmailSigninFailedException::new);
+        User userCheck = userJpaRepo.findById(userInfo.get("id").toString()).orElseThrow(CEmailSigninFailedException::new);
 
-        String jwtToken = jwtTokenProvider.createToken(String.valueOf(user_check.getUser_id()), user_check.getRoles());
+
+        String jwtToken = jwtTokenProvider.createToken(String.valueOf(userCheck.getUser_id()), userCheck.getRoles());
         if (tokenVo.getJwt() == null) {
             tokenVo.setJwt(jwtToken);
         }
