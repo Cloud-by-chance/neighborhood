@@ -164,10 +164,10 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     }
     @ApiOperation(value = "로그아웃", notes = "회원을 삭제한다.")
     @PostMapping("/logout")
-    public SingleResult<String> logout(@RequestBody String token) {
-        String[] keys = token.split(" ");
-        String key = keys[0];
-        String accessToken = keys[1];
+    public SingleResult<String> logout(@RequestBody TokenVo token) {
+        System.out.println("token = " + token);
+        String key = token.getRefreshToken();
+        String accessToken = token.getAccessToken();
 
         String userid = jwtTokenProvider.informationToken(key).toString(); //유저 이름을 받아옴
         log.info("로그아웃 하려는 유저 ? : "+ userid);
@@ -237,6 +237,7 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
                 RefreshToken.createRefreshToken(
                         userCheck.getUser_id(),
                         token.getRefresh_token(),
+                        LoginCategory.LOCAL,
                         60 * 120 *1000L)
         );
 
