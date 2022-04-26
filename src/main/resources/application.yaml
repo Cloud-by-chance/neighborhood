@@ -1,39 +1,39 @@
 #LOAD profile aws
 spring:
-#  h2:
-#    console:
-#      enabled: true
-  profiles:
-    include: aws
-  # auto reload
-  devtools:
-    livereload:
+  h2:
+    console:
       enabled: true
-  mvc:
-    view:
-      suffix: .html
-  security:
-    user:
-      name: user
-      password: user1234
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-    database: mysql
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-    hibernate:
-      naming:
-        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-# SQL Parameter(?) 값 확인
-logging:
-  level:
-    org:
-      hibernate:
-        type:
-          descriptor:
-            sql: trace
+#  profiles:
+#    include: aws
+#  # auto reload
+#  devtools:
+#    livereload:
+#      enabled: true
+#  mvc:
+#    view:
+#      suffix: .html
+#  security:
+#    user:
+#      name: user
+#      password: user1234
+#  jpa:
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+#    database: mysql
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    hibernate:
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+## SQL Parameter(?) 값 확인
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        type:
+#          descriptor:
+#            sql: trace
 ## 포트 번호 지정
 server:
   port: 8081

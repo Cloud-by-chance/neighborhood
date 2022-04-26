@@ -41,7 +41,6 @@ public class UserController {
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
     @ApiOperation(value = "회원 단건 조회", notes = "회원id(uid)로 회원을 조회한다")
-
     @GetMapping(value = "/user")
     public SingleResult<User> findUser(@AuthenticationPrincipal User check_user) {
         //이 어노테이션이 핵심이다 AuthenticationPrincipal을 USer객체로 받는것
