@@ -3,6 +3,9 @@ spring:
 #  h2:
 #    console:
 #      enabled: true
+  redis: #AWS Elastic Serach 추가 예정
+    port: 6379
+    host: localhost #테스트용 localhost
   profiles:
     include: aws
   # auto reload

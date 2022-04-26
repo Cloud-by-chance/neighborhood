@@ -7,10 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Column;
 import javax.persistence.Id;
-import javax.persistence.Transient;
-import javax.persistence.Version;
 
 @Getter
 @NoArgsConstructor
