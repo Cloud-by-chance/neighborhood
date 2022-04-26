@@ -2,10 +2,8 @@ package com.example.nuvi_demo.web.region;
 
 import com.example.nuvi_demo.domain.region.Region;
 import com.example.nuvi_demo.domain.region.RegionRepository;
-import com.example.nuvi_demo.service.region.RegionService;
 import com.example.nuvi_demo.web.dto.region.RegionSaveRequestDto;
 import com.example.nuvi_demo.web.dto.region.RegionUpdateRequestDto;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

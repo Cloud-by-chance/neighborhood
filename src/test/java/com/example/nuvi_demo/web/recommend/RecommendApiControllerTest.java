@@ -4,7 +4,6 @@ import com.example.nuvi_demo.domain.recommend.Recommend;
 import com.example.nuvi_demo.domain.recommend.RecommendRepository;
 import com.example.nuvi_demo.web.dto.recommend.RecommendSaveRequestDto;
 import com.example.nuvi_demo.web.dto.recommend.RecommendUpdateRequestDto;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

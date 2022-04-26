@@ -2,23 +2,17 @@ package com.example.nuvi_demo.Controller;
 
 
 
-import com.example.nuvi_demo.domain.Entity.User;
-import com.example.nuvi_demo.domain.Entity.UserVo;
-import com.example.nuvi_demo.domain.Entity.TokenVo;
-
-import com.example.nuvi_demo.domain.Entity.Auth;
+import com.example.nuvi_demo.domain.Entity.*;
 
 import com.example.nuvi_demo.Exception.CEmailSigninFailedException;
-import com.example.nuvi_demo.Repo.AuthRepo;
-import com.example.nuvi_demo.Repo.UserJpaRepo;
+//import com.example.nuvi_demo.Repo.AuthRepo;
+import com.example.nuvi_demo.Repo.*;
 import com.example.nuvi_demo.config.Security.JwtTokenProvider;
 import com.example.nuvi_demo.domain.token.Token;
 import com.example.nuvi_demo.model.response.*;
 import com.example.nuvi_demo.service.user.KakaoAPIService;
 import com.example.nuvi_demo.service.user.ResponseService;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +34,7 @@ import java.util.List;
 @Slf4j
 @Api(tags = {"1. Sign"})
 @RequiredArgsConstructor
-@RequestMapping(value = "/v1", produces = "application/json;charset=utf-8")
+@RequestMapping(value = "/auth", produces = "application/json;charset=utf-8")
 @CrossOrigin(origins = "*") //리액트와 연동하기 위한 CROS 설정
 public class SignController { //가입과 로그인에 대한 COntroller이다.
     private final KakaoAPIService kakao;
@@ -55,8 +49,11 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     @Autowired //로그인 안되던 이유..
     private final PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private final RefreshTokenRedisRepository refreshTokenRedisRepository;
+
     @ApiOperation(value = "로그인", notes = "이메일 회원 로그인을 한다.")
-    @PostMapping(value = "/signin")
+    @PostMapping(value = "/login")
     public SingleResult<String> signin(@ApiParam(value = "회원 로그인 Token 발급", required = true) @RequestBody UserVo userVo) {
 //    public ListResult<String> signin(@ApiParam(value = "회원 로그인 Token 발급", required = true) @RequestBody UserVo userVo) {
         User userCheck = userJpaRepo.findById(userVo.getId()).orElseThrow(CEmailSigninFailedException::new);
@@ -70,15 +67,15 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
 
         jwt.add(refresh_token);
         jwt.add(access_token);
-        //Auth 정보 저장을 위해 토큰 값과 userID를 가져와 builder해준다.
-
-        authRepo.save(Auth.builder().Refresh_token(refresh_token)
-                .idx(Base64.getEncoder().encodeToString((userVo.getId()+access_token).getBytes(StandardCharsets.UTF_8)))
-                .Access_token(access_token)
-                .user_id(userVo.getId())
-                .timestamp(Timestamp.valueOf(LocalDateTime.now()))
-                .build());
-//        authRepo.getById("Refresh_token");
+        log.info(refresh_token);
+        log.info(userVo.getId());
+        //refresh 토큰을 Redis 저장소로 저장한다.
+        refreshTokenRedisRepository.save(
+                RefreshToken.createRefreshToken(
+                        userVo.getId(),
+                        refresh_token,
+                        60 * 120 *1000L) //2번째 내용이 n분을 뜻함
+        );
         //jwt에 Access 토큰과 refresh 토큰을 넣고 Tostring으로 보내준다.
         return responseService.getSingleResult(jwt.toString());
 //        return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user_check.getUser_id()), user_check.getRoles()));
@@ -103,37 +100,78 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
         return responseService.getSuccessResult();
     }
 
-    @Transactional
-    @PostMapping(value = "/refreshtoken")
-    public SingleResult<String> refreshtoken(String token) { //에러가 뜬다면 refresh 토큰을 받음 해당 토큰으로 재 발급 받는다.
+    //Access 토큰이 잘 오기만 하면 된다.
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token을 넣으세요", required = true, dataType = "String", paramType = "header")
+    })
+    @ApiOperation(value = "Token 유효 검사", notes = "Validaiton!")
+    @GetMapping(value = "/validate")
+    public CommonResult checkToken(String key){
+        log.info(key);//
 
-//        String userid = authRepo.findById(token).get().getUser_id();
-        String userid = jwtTokenProvider.informationToken(token).toString(); //refresh 토큰에 있는 유저 정보를 가져옴
+        return responseService.getSuccessResult(); //잘 들어오기만 하면 된다. 왜냐면 이미 들어오는거 자체가 Filter를 거치기 때문.
+    }
+
+
+
+    @ApiOperation(value = "Refresh Token 인증")
+    @PostMapping(value = "/refresh")
+    public CommonResult  refreshProcess(String key){
+        String userid = jwtTokenProvider.informationToken(key).toString(); //refresh 토큰에 있는 유저 정보를 가져옴
+        User userCheck = userJpaRepo.findById(userid).orElseThrow(CEmailSigninFailedException::new); //해당 토큰의 유저가 DB에 있는지
         log.info("유저 ? : "+ userid);
-        log.info("유저 역할? : "+ userJpaRepo.findById(userid).toString());
 
-        String access_token = jwtTokenProvider.createToken(String.valueOf(userid), userJpaRepo.findById(userid).get().getRoles());
-        log.info("유저 정보? : " + jwtTokenProvider.informationToken(token));
 
-        if (jwtTokenProvider.validateToken(token)) { //만약 refresh 토큰의 기간이 유효하면 새 access 토큰을 발행
-//            authRepo.save(Auth.builder().Refresh_token(token).Access_token(access_token).user_id(userid).build());
-            authRepo.save(Auth.builder().Refresh_token(token)
-                    .idx(Base64.getEncoder().encodeToString((userid + access_token).getBytes(StandardCharsets.UTF_8)))
-                    .Access_token(access_token)
-                    .user_id(userid)
-//                    .timestamp(Timestamp.valueOf(LocalDateTime.now())) //timestamp는 업데이트 되지 않는다.
-                    .build());
-        } else {
-            authRepo.deleteById(userid); // 유효기간이 지난 토큰을 삭제 후 다시 생성
-            String refresh_token = jwtTokenProvider.createRefreshToken(userid);
-            authRepo.save(Auth.builder().Refresh_token(token)
-                    .idx(Base64.getEncoder().encodeToString((userid + access_token).getBytes(StandardCharsets.UTF_8)))
-                    .Access_token(access_token)
-                    .user_id(userid)
-                    .timestamp(Timestamp.valueOf(LocalDateTime.now())) //삭제후 생성이므로 timestamp도 재설정
-                    .build());
+        if (refreshTokenRedisRepository.findById(userid).toString().equals("Optional.empty")) //empty면 Redis에 User관련 토큰이 x
+        {
+            log.info("Refresh 토큰이 만료되었습니다. Refrsh/Access를 재발급 합니다.");
+
+            //토큰 2개 재생성
+            ArrayList<String> jwt =new ArrayList<String>();
+            String refresh_token = jwtTokenProvider.createRefreshToken(String.valueOf(userCheck.getUser_id()));
+            String access_token= jwtTokenProvider.createToken(String.valueOf(userCheck.getUser_id()), userCheck.getRoles());
+
+            jwt.add(refresh_token);
+            jwt.add(access_token);
+
+            //Redis에 Refresh token 저장.
+            refreshTokenRedisRepository.save(
+                    RefreshToken.createRefreshToken(
+                            userid,
+                            refresh_token,
+                            60 * 3* 1000L) //1분임
+            );
+            return responseService.getSingleResult(jwt.toString());
         }
-        return responseService.getSingleResult(access_token);
+        else{
+            String access_token= jwtTokenProvider.createToken(String.valueOf(userCheck.getUser_id()), userCheck.getRoles());
+            log.info("Refresh 확인 Access_Token 재 발급");
+            return responseService.getSingleResult(access_token);
+        }
+
+
+    }
+    @ApiOperation(value = "로그아웃", notes = "회원을 삭제한다.")
+    @PostMapping("/logout")
+    public SingleResult<String> logout(@RequestBody String key) {
+        String userid = jwtTokenProvider.informationToken(key).toString(); //유저 이름을 받아옴
+        log.info("로그아웃 하려는 유저 ? : "+ userid);
+        refreshTokenRedisRepository.deleteById(userid);  //유저 이름을 기준으로 Refresh 토큰 삭제
+
+        return responseService.getSingleResult("LogOut이 완료되었습니다");
+    }
+
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
+    })
+    @ApiOperation(value = "회원 삭제", notes = "회원번호(user_id)로 회원정보를 삭제한다")
+    @DeleteMapping(value = "/user/{user_id}")
+    public CommonResult delete(
+            @ApiParam(value = "회원번호", required = true) @PathVariable String user_id) {
+        userJpaRepo.deleteById(user_id);
+
+        // 성공 결과 정보만 필요한경우 getSuccessResult()를 이용하여 결과를 출력한다.
+        return responseService.getSuccessResult();
     }
 
     @RequestMapping(value = "/kakaoLogin")

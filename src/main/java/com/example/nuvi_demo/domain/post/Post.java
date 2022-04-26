@@ -3,8 +3,8 @@ package com.example.nuvi_demo.domain.post;
 import com.example.nuvi_demo.domain.board.Board;
 import com.example.nuvi_demo.domain.file.File;
 import com.example.nuvi_demo.domain.member.Member;
-import com.example.nuvi_demo.domain.recommend.Recommend;
 import com.example.nuvi_demo.domain.reply.Reply;
+import com.example.nuvi_demo.domain.recommend.Recommend;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,9 +14,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Getter

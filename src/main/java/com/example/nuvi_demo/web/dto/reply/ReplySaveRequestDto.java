@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.Column;
-import javax.persistence.Table;
 
 @Getter
 @NoArgsConstructor

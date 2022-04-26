@@ -4,7 +4,6 @@ import com.example.nuvi_demo.domain.reply.Reply;
 import com.example.nuvi_demo.domain.reply.ReplyRepository;
 import com.example.nuvi_demo.web.dto.reply.ReplySaveRequestDto;
 import com.example.nuvi_demo.web.dto.reply.ReplyUpdateRequestDto;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

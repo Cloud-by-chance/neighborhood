@@ -3,7 +3,6 @@ package com.example.nuvi_demo.domain.member;
 import org.junit.After;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
-import org.mockito.internal.matchers.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Commit;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
