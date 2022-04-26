@@ -21,6 +21,11 @@ import org.springframework.web.bind.annotation.*;
 
 
 import javax.transaction.Transactional;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -74,6 +79,7 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
                 RefreshToken.createRefreshToken(
                         userVo.getId(),
                         refresh_token,
+                        LoginCategory.LOCAL,
                         60 * 120 *1000L) //2번째 내용이 n분을 뜻함
         );
         //jwt에 Access 토큰과 refresh 토큰을 넣고 Tostring으로 보내준다.
@@ -125,6 +131,8 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
         if (refreshTokenRedisRepository.findById(userid).toString().equals("Optional.empty")) //empty면 Redis에 User관련 토큰이 x
         {
             log.info("Refresh 토큰이 만료되었습니다. Refrsh/Access를 재발급 합니다.");
+            //noinspection OptionalGetWithoutIsPresent
+            LoginCategory loginCategory = refreshTokenRedisRepository.findById(userid).get().getLoginCategory();
 
             //토큰 2개 재생성
             ArrayList<String> jwt =new ArrayList<String>();
@@ -134,11 +142,13 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
             jwt.add(refresh_token);
             jwt.add(access_token);
 
+
             //Redis에 Refresh token 저장.
             refreshTokenRedisRepository.save(
                     RefreshToken.createRefreshToken(
                             userid,
                             refresh_token,
+                            loginCategory,
                             60 * 3* 1000L) //1분임
             );
             return responseService.getSingleResult(jwt.toString());
@@ -153,9 +163,44 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     }
     @ApiOperation(value = "로그아웃", notes = "회원을 삭제한다.")
     @PostMapping("/logout")
-    public SingleResult<String> logout(@RequestBody String key) {
+    public SingleResult<String> logout(@RequestBody String token) {
+        String[] keys = token.split(" ");
+        String key = keys[0];
+        String accessToken = keys[1];
+
         String userid = jwtTokenProvider.informationToken(key).toString(); //유저 이름을 받아옴
         log.info("로그아웃 하려는 유저 ? : "+ userid);
+
+        //noinspection OptionalGetWithoutIsPresent
+        LoginCategory loginCategory = refreshTokenRedisRepository.findById(userid).get().getLoginCategory();
+
+        if (loginCategory == LoginCategory.KAKAO) {
+            String reqURL = "https://kapi.kakao.com/v1/user/logout";
+
+            try {
+                URL url = new URL(reqURL);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+                int responseCode = conn.getResponseCode();
+                System.out.println("responseCode : " + responseCode);
+
+                BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
+                StringBuilder result = new StringBuilder();
+                String line = "";
+
+                while ((line = br.readLine()) != null) {
+                    result.append(line);
+                }
+                System.out.println(result);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+
         refreshTokenRedisRepository.deleteById(userid);  //유저 이름을 기준으로 Refresh 토큰 삭제
 
         return responseService.getSingleResult("LogOut이 완료되었습니다");
@@ -186,7 +231,13 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
         }
 
         Token token = new Token(userInfo.get("id").toString(), tokenVo);
-        kakao.saveToken(token);
+        //refresh 토큰을 Redis 저장소로 저장한다.
+        refreshTokenRedisRepository.save(
+                RefreshToken.createRefreshToken(
+                        userCheck.getUser_id(),
+                        token.getRefresh_token(),
+                        60 * 120 *1000L)
+        );
 
         List<String> res = new ArrayList<>();
         res.add(jwtToken);

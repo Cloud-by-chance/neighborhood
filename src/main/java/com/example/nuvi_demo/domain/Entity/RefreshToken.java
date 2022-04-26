@@ -23,15 +23,25 @@ public class RefreshToken {
     private String id;
 
     private String refreshToken;
-
+    private LoginCategory loginCategory;
     @TimeToLive //TTL즉 이 시간이 지나면 자동으로 삭제되게 함
     private Long expiration;
 
-    public static RefreshToken createRefreshToken(String username, String refreshToken, Long remainingMilliSeconds) {
+
+    public static RefreshToken createRefreshToken(String username, String refreshToken,Long remainingMilliSeconds) {
         return RefreshToken.builder()
                 .id(username)
                 .refreshToken(refreshToken)
                 .expiration(remainingMilliSeconds / 1000)
                 .build();
     }
+    public static RefreshToken createRefreshToken(String username, String refreshToken, LoginCategory loginCategory,Long remainingMilliSeconds) {
+        return RefreshToken.builder()
+                .id(username)
+                .refreshToken(refreshToken)
+                .loginCategory(loginCategory)
+                .expiration(remainingMilliSeconds / 1000)
+                .build();
+    }
+
 }
