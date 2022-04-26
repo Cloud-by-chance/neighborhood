@@ -34,19 +34,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/webjars/**",
             "/swagger/**",
             "/swagger-ui/index.html",
-            "/*/signin",
-            "/*/signin/**",
-            "/*/signup",
-            "/*/signup/**",
             "/social/**",
             "/h2-console",
-            "/api/**",
-            "/resources/**",
-            "/js/**",
+
             "/auth/logout/**",
             "/auth/login/**",
             "/auth/singup/**",
-            "/auth/refresh/**",
+            "/auth/refreshtoken/**",
             "/auth/kakaoLogin/**"
 //            "/auth/validate"
     };
@@ -67,7 +61,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable() // rest api이므로 csrf 보안이 필요없으므로 disable처리.
-
                 //예외 처리 핸들링
                 .exceptionHandling()
                 .authenticationEntryPoint(jwtEntryPoint)
@@ -82,7 +75,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests() // 아래의 리퀘스트에 대한 사용권한 체크,
                 .antMatchers(AUTH_LIST).permitAll()  // AUTH_LIST에 해당되는 접근은 모두 허가해 준다.
                 .anyRequest().hasRole("USER") // 그외 나머지 요청은 모두 인증된 회원만 접근 가능
-
+                .and()
+                .cors()
                 //JWT 인증 필터 설정
                 .and()
                 .apply(new JwtSecurityConfig(jwtTokenProvider));

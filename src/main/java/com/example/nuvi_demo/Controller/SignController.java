@@ -121,8 +121,9 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
 
 
     @ApiOperation(value = "Refresh Token 인증")
-    @PostMapping(value = "/refresh")
-    public CommonResult  refreshProcess(String key){
+    @PostMapping(value = "/refreshtoken")
+    public CommonResult  refreshProcess(@RequestBody String key){
+        log.info("키값? : "+ key);
         String userid = jwtTokenProvider.informationToken(key).toString(); //refresh 토큰에 있는 유저 정보를 가져옴
         User userCheck = userJpaRepo.findById(userid).orElseThrow(CEmailSigninFailedException::new); //해당 토큰의 유저가 DB에 있는지
         log.info("유저 ? : "+ userid);
