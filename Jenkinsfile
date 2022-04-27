@@ -30,7 +30,8 @@ pipeline {
             }
         }
         steps {
-	    sh 'chmod +x gradlew'
+		sh 'gradle wrapper'
+	        sh 'chmod +x gradlew'
                 sh  './gradlew clean build'
                 sh  './gradlew --refresh-dependencies'
                 sh  'ls -al ./build'
