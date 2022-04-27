@@ -1,4 +1,4 @@
-FROM openjdk:18
+FROM openjdk:11
 
 #빌드 되는 시점에 JAR_FILE 경로
 ARG JAR_FILE=build/libs/*.jar

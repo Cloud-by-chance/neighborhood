@@ -1,9 +1,6 @@
 package com.example.nuvi_demo.web;
 
 import com.example.nuvi_demo.service.reply.ReplyService;
-import com.example.nuvi_demo.web.dto.post.PostResponseDto;
-import com.example.nuvi_demo.web.dto.post.PostSaveRequestDto;
-import com.example.nuvi_demo.web.dto.post.PostUpdateRequestDto;
 import com.example.nuvi_demo.web.dto.reply.ReplyResponseDto;
 import com.example.nuvi_demo.web.dto.reply.ReplySaveRequestDto;
 import com.example.nuvi_demo.web.dto.reply.ReplyUpdateRequestDto;

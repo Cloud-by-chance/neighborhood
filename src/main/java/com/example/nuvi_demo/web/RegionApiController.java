@@ -1,10 +1,6 @@
 package com.example.nuvi_demo.web;
 
-import com.example.nuvi_demo.service.post.PostService;
 import com.example.nuvi_demo.service.region.RegionService;
-import com.example.nuvi_demo.web.dto.post.PostResponseDto;
-import com.example.nuvi_demo.web.dto.post.PostSaveRequestDto;
-import com.example.nuvi_demo.web.dto.post.PostUpdateRequestDto;
 import com.example.nuvi_demo.web.dto.region.RegionResponseDto;
 import com.example.nuvi_demo.web.dto.region.RegionSaveRequestDto;
 import com.example.nuvi_demo.web.dto.region.RegionUpdateRequestDto;
