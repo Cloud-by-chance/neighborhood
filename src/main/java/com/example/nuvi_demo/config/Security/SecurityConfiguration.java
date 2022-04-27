@@ -41,7 +41,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/auth/login/**",
             "/auth/signup/**",
             "/auth/refreshtoken/**",
-            "/auth/kakaoLogin/**"
+            "/auth/kakaoLogin/**",
+            "/auth/kakaologin/**"
 //            "/auth/validate"
     };
 
