@@ -2,6 +2,7 @@
 package com.example.nuvi_demo.service.user;
 
 //<<<<<<< HEAD
+import com.example.nuvi_demo.domain.Entity.RefreshToken;
 import com.example.nuvi_demo.domain.Entity.User;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.domain.member.Member;
@@ -37,8 +38,7 @@ public class KakaoAPIService {
     private MemberRepository mr;
     @Autowired
     private final SecurityInfo securityInfo;
-    @Autowired
-    private final TokenRepository tokenRepository;
+
     @Autowired
     private final UserJpaRepo userJpaRepo;
     @Autowired
@@ -99,20 +99,16 @@ public class KakaoAPIService {
 
         return Optional.of(accessToken);
     }
-
+    private final String HTTP_REQUEST = "https://kapi.kakao.com/v2/user/me";
     public HashMap<String, Object> getUserInfo(String accessToken) {
         //    요청하는 클라이언트마다 가진 정보가 다를 수 있기에 HashMap타입으로 선언
         HashMap<String, Object> userInfo = new HashMap<String, Object>();
-        String reqURL = "https://kapi.kakao.com/v2/user/me";
         try {
-            URL url = new URL(reqURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            URL url = new URL(HTTP_REQUEST+"?access_token="+accessToken);
 
-            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream(), StandardCharsets.UTF_8));
 
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-            String line = "";
+            String line;
             StringBuilder result = new StringBuilder();
 
             while ((line = br.readLine()) != null) {
@@ -129,11 +125,14 @@ public class KakaoAPIService {
 
             long id = element.getAsJsonObject().get("id").getAsLong();
             String nickName = properties.getAsJsonObject().get("nickname").getAsString();
-            //String age = element.getAsJsonObject().get("kakao_account").getAsJsonObject().get("age_range").getAsString();
+            String image  = kakao_account.getAsJsonObject().get("profile").getAsJsonObject().get("profile_image_url").getAsString();
+            String email =kakao_account.getAsJsonObject().get("email").getAsString();
 
             userInfo.put("id", id);
             userInfo.put("nickName", nickName);
-            //userInfo.put("age", age);
+            userInfo.put("image", image);
+            userInfo.put("email", email);
+
             br.close();
 
         } catch (IOException e) {
@@ -146,7 +145,8 @@ public class KakaoAPIService {
         if (findMember.isEmpty()) {
             mr.saveAndFlush(Member.builder().user_id(userInfo.get("id").toString())
                     .nick_name(userInfo.get("nickName").toString())
-                    .password("sdf")
+                    .password("1234")
+                    .email(userInfo.get("email").toString())
                     .region_id(1)  //TODO 지역코드 추후 변경
                     .build());
 
@@ -154,8 +154,7 @@ public class KakaoAPIService {
                     .user_id(userInfo.get("id").toString())
                     .password(passwordEncoder.encode(userInfo.get("id").toString() + accessToken))
                     .nick_name(userInfo.get("nickName").toString())
-                    //.email("sdf")
-//                .age(user2.getAge())
+                    .email(userInfo.get("email").toString())
                     .roles(Collections.singletonList("ROLE_USER"))
                     .build());
         }
@@ -163,42 +162,42 @@ public class KakaoAPIService {
     }
 
     // 로그아웃
-    public void kakaoLogout(String access_Token) {
-        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+//    public void kakaoLogout(String access_Token) {
+//        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+//
+//        try {
+//            URL url = new URL(reqURL);
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setRequestMethod("POST");
+//            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+//
+//            int responseCode = conn.getResponseCode();
+//            System.out.println("responseCode : " + responseCode);
+//
+//            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//
+//            StringBuilder result = new StringBuilder();
+//            String line = "";
+//
+//            while ((line = br.readLine()) != null) {
+//                result.append(line);
+//            }
+//            System.out.println(result);
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//
+//    }
 
-        try {
-            URL url = new URL(reqURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
-
-            int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-            StringBuilder result = new StringBuilder();
-            String line = "";
-
-            while ((line = br.readLine()) != null) {
-                result.append(line);
-            }
-            System.out.println(result);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-    }
-
-    public void saveToken(Token token) {
-        System.out.println(token.toString());
-        tokenRepository.save(Token.builder()
-                .idx(Base64.getEncoder().encodeToString((token.getUser_id() + token.getAccess_token()).getBytes(StandardCharsets.UTF_8)))
-                .Access_token(token.getAccess_token())
-                .Refresh_token(token.getRefresh_token())
-                .user_id(token.getUser_id())
-                .build());
-    }
+//    public void saveToken(Token token) {
+//
+//        tokenRepository.save(Token.builder()
+//                .idx(Base64.getEncoder().encodeToString((token.getUser_id() + token.getAccess_token()).getBytes(StandardCharsets.UTF_8)))
+//                .Access_token(token.getAccess_token())
+//                .Refresh_token(token.getRefresh_token())
+//                .user_id(token.getUser_id())
+//                .build());
+//    }
 }
 

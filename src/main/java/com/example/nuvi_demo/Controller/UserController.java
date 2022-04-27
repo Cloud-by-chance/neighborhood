@@ -9,7 +9,9 @@ import com.example.nuvi_demo.model.response.*;
 import com.example.nuvi_demo.service.user.ResponseService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = {"2. User"})
 @RequiredArgsConstructor
 @RestController
-
+@Slf4j
 @RequestMapping(value = "/v1")
 public class UserController {
 
@@ -39,12 +41,16 @@ public class UserController {
             @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")
     })
     @ApiOperation(value = "회원 단건 조회", notes = "회원id(uid)로 회원을 조회한다")
-
     @GetMapping(value = "/user")
-    public SingleResult<User> findUser() {
+    public SingleResult<User> findUser(@AuthenticationPrincipal User check_user) {
+        //이 어노테이션이 핵심이다 AuthenticationPrincipal을 USer객체로 받는것
         // SecurityContext에서 인증받은 회원의 정보를 얻어온다.
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String id = authentication.getName();
+        log.info("authentication 정보: "+authentication.toString());
+        log.info("authentication get name 정보: "+ check_user.getUser_id());
+//        authentication.getPrincipal().getClass();
+
+        String id = check_user.getUser_id();
         // 결과데이터가 단일건인경우 getSingleResult를 이용해서 결과를 출력한다.
         return responseService.getSingleResult(userJpaRepo.findById(id).orElseThrow(CUserNotFoundException::new));
 
@@ -61,7 +67,6 @@ public class UserController {
         User user = User.builder()
 //                .user_id(user_id) //user_id는 pk이니깐 일단 보류
                 .nick_name(nick_name)
-
                 .build();
         return responseService.getSingleResult(userJpaRepo.save(user));
     }

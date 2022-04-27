@@ -1,8 +1,12 @@
+
 #LOAD profile aws
 spring:
-#  h2:
-#    console:
-#      enabled: true
+  #  h2:
+  #    console:
+  #      enabled: true
+  redis: #AWS Elastic Serach ?? ??
+    port: 6379
+    host: localhost #??? ???
   profiles:
     include: aws
   # auto reload
@@ -26,7 +30,7 @@ spring:
     hibernate:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-# SQL Parameter(?) 값 확인
+# SQL Parameter(?) ? ??
 logging:
   level:
     org:

@@ -4,7 +4,6 @@ import com.example.nuvi_demo.domain.file.File;
 import com.example.nuvi_demo.domain.file.FileRepository;
 import com.example.nuvi_demo.web.dto.file.FileSaveRequestDto;
 import com.example.nuvi_demo.web.dto.file.FileUpdateRequestDto;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

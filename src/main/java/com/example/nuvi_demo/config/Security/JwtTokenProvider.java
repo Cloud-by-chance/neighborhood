@@ -28,8 +28,8 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     @Value("spring.jwt.secret")
     private String secretKey;
 
-    private long tokenValidMilisecond = 1000L * 2 * 60; // 1시간만 토큰 유효
-    private long refreshTokenValidMillisecond = 60 * 60 * 24 * 1000L; //하루 유효 기간.
+    private long tokenValidMilisecond = 1000L * 2 * 60 ; // 1000L * n *60 에서 n분이다.
+    private long refreshTokenValidMillisecond = 60 * 60 * 1000L; //사용 x?
     private final UserDetailsService userDetailsService; // 유저 정보를 저장하기 위한 객체 생성
 
     @PostConstruct
@@ -81,9 +81,10 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     // Jwt 토큰의 유효성 + 만료일자 확인
     public boolean validateToken(String jwtToken) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);//파싱으로 만료일자 확인.
+            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);//파싱으로 JWT에 대한 정보 분리
 
-            return !claims.getBody().getExpiration().before(new Date());
+            return !claims.getBody().getExpiration().before(new Date()); //정보중 만료 기간이 든 Expiration을 가져옴
+
         } catch (Exception e) { //기간 만료시 여기로 온다 -> 재발급 토큰을 db에서 확인 후 create token을 return
             log.info("기간이 만료된 토큰입니다.");
             return false;

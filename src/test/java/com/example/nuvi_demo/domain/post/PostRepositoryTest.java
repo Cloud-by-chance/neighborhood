@@ -16,7 +16,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.PostUpdate;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;

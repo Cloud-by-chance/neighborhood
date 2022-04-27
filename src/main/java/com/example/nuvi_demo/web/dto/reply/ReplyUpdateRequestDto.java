@@ -1,15 +1,11 @@
 package com.example.nuvi_demo.web.dto.reply;
 
-import com.example.nuvi_demo.domain.reply.Reply;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Column;
-import javax.persistence.Table;
 
 @Getter
 @NoArgsConstructor

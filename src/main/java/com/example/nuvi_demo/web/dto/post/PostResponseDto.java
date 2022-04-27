@@ -3,7 +3,6 @@ package com.example.nuvi_demo.web.dto.post;
 import com.example.nuvi_demo.domain.post.Post;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
