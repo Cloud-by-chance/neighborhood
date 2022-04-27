@@ -1,3 +1,15 @@
+//<<<<<<< HEAD
+//=======
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.6.RELEASE")
+	}
+}
+
+//>>>>>>> 31768f866a2761e9eb739823c0b214808af89696
 plugins {
 	id 'org.springframework.boot' version '2.6.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'

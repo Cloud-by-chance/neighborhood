@@ -165,8 +165,11 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     @ApiOperation(value = "로그아웃", notes = "회원을 삭제한다.")
     @PostMapping("/logout")
     public SingleResult<String> logout(@RequestBody TokenVo token) {
-        System.out.println("token = " + token);
+        log.info(String.valueOf(token));
+
         String key = token.getRefreshToken();
+        log.info(key);
+
         String accessToken = token.getAccessToken();
 
         String userid = jwtTokenProvider.informationToken(key).toString(); //유저 이름을 받아옴
@@ -230,12 +233,14 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
         if (tokenVo.getJwt() == null) {
             tokenVo.setJwt(jwtToken);
         }
+        String refresh_token = jwtTokenProvider.createRefreshToken(String.valueOf(userCheck.getUser_id()));
 
         Token token = new Token(userInfo.get("id").toString(), tokenVo);
         //refresh 토큰을 Redis 저장소로 저장한다.
         refreshTokenRedisRepository.save(
                 RefreshToken.createRefreshToken(
                         userCheck.getUser_id(),
+                        refresh_token,
                         token.getRefresh_token(),
                         LoginCategory.LOCAL,
                         60 * 120 *1000L)
@@ -247,6 +252,7 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
         res.add(userInfo.get("id").toString());
         res.add(userInfo.get("email").toString());
         res.add(userInfo.get("image").toString());
+        res.add(refresh_token);
 
         return responseService.getListResult(res);
     }

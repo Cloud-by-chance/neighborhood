@@ -1,17 +1,12 @@
 
 package com.example.nuvi_demo.service.user;
 
-//<<<<<<< HEAD
-import com.example.nuvi_demo.domain.Entity.RefreshToken;
+
 import com.example.nuvi_demo.domain.Entity.User;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.domain.member.Member;
 import com.example.nuvi_demo.domain.member.MemberRepository;
 import com.example.nuvi_demo.domain.personal.kakaoLogin.security.SecurityInfo;
-//=======
-import com.example.nuvi_demo.domain.token.Token;
-import com.example.nuvi_demo.domain.token.TokenRepository;
-//>>>>>>> 4e5c6e3868e5b758f3fb8c5524967f065b31d093
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -25,7 +20,6 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Optional;
