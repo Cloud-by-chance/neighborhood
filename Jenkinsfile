@@ -22,6 +22,7 @@ pipeline {
                 }
         }
     }
+/*
     stage('Build and test') {
         agent {
             docker {
@@ -39,6 +40,7 @@ pipeline {
             //sh 'gradle clean build -b build.gradle --scan'
         }
     }
+*/
     stage('Docker Image Build') {
         steps {
             sh "docker build . -t ${dockerHubRegistry}:${currentBuild.number}"
