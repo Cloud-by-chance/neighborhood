@@ -31,7 +31,7 @@ pipeline {
         }
         steps {
 //	    sh './gradlew clean build'
-            sh 'gradle clean build -b build.gradle --stacktrace --info --scan'
+            sh 'gradle clean build -b build.gradle'
         }
     }
     stage('Docker Image Build') {
