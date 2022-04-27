@@ -48,7 +48,7 @@ public class Member {
     private String nick_name;
     private String password;
     private String email;
-    private int age;
+    private Integer age;
     private LocalDateTime create_dt;
     private LocalDateTime update_dt;
     private int is_del;

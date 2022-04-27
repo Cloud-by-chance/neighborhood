@@ -44,6 +44,10 @@ public class Post {
     private String content;
     // N : 1 관계
     @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumns({
+//            @JoinColumn(name = "user_id", insertable=false, updatable=false),
+//            @JoinColumn(name = "nick_name", insertable = false, updatable = false)
+//    })
     @JoinColumn(name = "user_id", insertable=false, updatable=false)
     private Member member;
     @ManyToOne(fetch = FetchType.LAZY)
@@ -62,7 +66,6 @@ public class Post {
     @JoinColumn(name = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<File> fileList;
-
 
     @Builder
     public Post(String post_name, Long board_id, String user_id, int hits, int reply_cnt, int is_lock, int reply_role, String content) {
