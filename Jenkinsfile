@@ -30,11 +30,12 @@ pipeline {
             }
         }
         steps {
-		sh 'gradle wrapper'
-	        sh 'chmod +x gradlew'
-                sh  './gradlew clean build'
-                sh  './gradlew --refresh-dependencies'
-                sh  'ls -al ./build'
+		sh  '/var/jenkins_home/tools/hudson.plugins.gradle.GradleInstallation/cicd-gradle/bin/gradle clean build'
+		//sh 'gradle wrapper'
+	        //sh 'chmod +x gradlew'
+                //sh  './gradlew clean build'
+                //sh  './gradlew --refresh-dependencies'
+                //sh  'ls -al ./build'
             //sh 'gradle clean build -b build.gradle --scan'
         }
     }
