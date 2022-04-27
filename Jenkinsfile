@@ -22,6 +22,7 @@ pipeline {
                 }
         }
     }
+/*
     stage('Build and test') {
         agent {
             docker {
@@ -30,11 +31,21 @@ pipeline {
             }
         }
         steps {
-	    //sh './gradlew clean build'
-	    //sh './gradlew --refresh-dependencies'
-            sh 'gradle clean build -b build.gradle --scan'
+<<<<<<< HEAD
+	    sh './gradlew clean build'
+//            sh 'gradle clean build -b build.gradle'
+=======
+		sh  '/var/jenkins_home/tools/hudson.plugins.gradle.GradleInstallation/cicd-gradle/bin/gradle clean build'
+		//sh 'gradle wrapper'
+	        //sh 'chmod +x gradlew'
+                //sh  './gradlew clean build'
+                //sh  './gradlew --refresh-dependencies'
+                //sh  'ls -al ./build'
+            //sh 'gradle clean build -b build.gradle --scan'
+>>>>>>> 7d5def0c6bad4417097cec75207e4788aa5165ce
         }
     }
+*/
     stage('Docker Image Build') {
         steps {
             sh "docker build . -t ${dockerHubRegistry}:${currentBuild.number}"
@@ -71,7 +82,7 @@ pipeline {
                 }
         }
     }  
-/*
+
     stage('K8S Manifest Update') {
         steps {
             git url: 'https://github.com/Cloud-by-chance/neighborhood-manifest.git',
@@ -94,7 +105,7 @@ pipeline {
                 }
         }
     }
-*/
+
 
   }  
 }
