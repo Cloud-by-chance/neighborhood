@@ -15,11 +15,7 @@ configurations {
 }
 
 repositories {
-    mavenLocal()	
-    maven { url 'https://plugins.gradle.org/m2/' }
-    mavenCentral()
-    jcenter()
-    gradlePluginPortal()
+	mavenCentral()
 }
 
 dependencies {
@@ -65,4 +61,3 @@ test {
 	exclude 'com/example/**'
 	useJUnitPlatform()
 }
-
