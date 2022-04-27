@@ -1,14 +1,13 @@
 package com.example.nuvi_demo.service.user;
 
+
 import com.example.nuvi_demo.domain.Entity.User;
 import com.example.nuvi_demo.Repo.UserJpaRepo;
 import com.example.nuvi_demo.domain.member.Member;
 import com.example.nuvi_demo.domain.member.MemberRepository;
 import com.example.nuvi_demo.domain.personal.kakaoLogin.security.SecurityInfo;
-
 import com.example.nuvi_demo.domain.token.Token;
 import com.example.nuvi_demo.domain.token.TokenRepository;
-
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -22,7 +21,6 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Optional;
@@ -35,8 +33,7 @@ public class KakaoAPIService {
     private MemberRepository mr;
     @Autowired
     private final SecurityInfo securityInfo;
-    @Autowired
-    private final TokenRepository tokenRepository;
+
     @Autowired
     private final UserJpaRepo userJpaRepo;
     @Autowired
@@ -160,42 +157,42 @@ public class KakaoAPIService {
     }
 
     // 로그아웃
-    public void kakaoLogout(String access_Token) {
-        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+//    public void kakaoLogout(String access_Token) {
+//        String reqURL = "https://kapi.kakao.com/v1/user/logout";
+//
+//        try {
+//            URL url = new URL(reqURL);
+//            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//            conn.setRequestMethod("POST");
+//            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+//
+//            int responseCode = conn.getResponseCode();
+//            System.out.println("responseCode : " + responseCode);
+//
+//            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//
+//            StringBuilder result = new StringBuilder();
+//            String line = "";
+//
+//            while ((line = br.readLine()) != null) {
+//                result.append(line);
+//            }
+//            System.out.println(result);
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//
+//    }
 
-        try {
-            URL url = new URL(reqURL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("POST");
-            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
-
-            int responseCode = conn.getResponseCode();
-            System.out.println("responseCode : " + responseCode);
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-            StringBuilder result = new StringBuilder();
-            String line = "";
-
-            while ((line = br.readLine()) != null) {
-                result.append(line);
-            }
-            System.out.println(result);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-    }
-
-    public void saveToken(Token token) {
-        System.out.println(token.toString());
-        tokenRepository.save(Token.builder()
-                .idx(Base64.getEncoder().encodeToString((token.getUser_id() + token.getAccess_token()).getBytes(StandardCharsets.UTF_8)))
-                .Access_token(token.getAccess_token())
-                .Refresh_token(token.getRefresh_token())
-                .user_id(token.getUser_id())
-                .build());
-    }
+//    public void saveToken(Token token) {
+//
+//        tokenRepository.save(Token.builder()
+//                .idx(Base64.getEncoder().encodeToString((token.getUser_id() + token.getAccess_token()).getBytes(StandardCharsets.UTF_8)))
+//                .Access_token(token.getAccess_token())
+//                .Refresh_token(token.getRefresh_token())
+//                .user_id(token.getUser_id())
+//                .build());
+//    }
 }
 
