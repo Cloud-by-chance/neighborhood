@@ -30,7 +30,8 @@ pipeline {
             }
         }
         steps {
-//	    sh './gradlew clean build'
+	    sh './gradlew clean build'
+	    sh './gradlew --refresh-dependencies'
             sh 'gradle clean build -b build.gradle'
         }
     }
