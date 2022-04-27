@@ -4,9 +4,6 @@ spring:
   #  h2:
   #    console:
   #      enabled: true
-  redis: #AWS Elastic Serach ?? ??
-    port: 6379
-    host: localhost #??? ???
   profiles:
     include: aws
   # auto reload

@@ -36,10 +36,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/swagger-ui/index.html",
             "/social/**",
             "/h2-console",
-
+            "/",
             "/auth/logout/**",
             "/auth/login/**",
-            "/auth/singup/**",
+            "/auth/signup/**",
             "/auth/refreshtoken/**",
             "/auth/kakaoLogin/**"
 //            "/auth/validate"

@@ -4,9 +4,6 @@ import com.example.nuvi_demo.service.file.FileService;
 import com.example.nuvi_demo.web.dto.file.FileResponseDto;
 import com.example.nuvi_demo.web.dto.file.FileSaveRequestDto;
 import com.example.nuvi_demo.web.dto.file.FileUpdateRequestDto;
-import com.example.nuvi_demo.web.dto.post.PostResponseDto;
-import com.example.nuvi_demo.web.dto.post.PostSaveRequestDto;
-import com.example.nuvi_demo.web.dto.post.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
