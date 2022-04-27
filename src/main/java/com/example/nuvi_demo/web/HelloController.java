@@ -3,19 +3,21 @@ package com.example.nuvi_demo.web;
 import com.example.nuvi_demo.service.post.PostService;
 import com.example.nuvi_demo.web.dto.post.PostResponseDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
 
 @Controller
 @RequiredArgsConstructor
 public class HelloController {
     private final PostService postService;
 
+    @GetMapping("/")
+    public String slash() {
+        return "hello";
+    }
+    
     @GetMapping("/hello")
     public String hello() {
         return "hello";

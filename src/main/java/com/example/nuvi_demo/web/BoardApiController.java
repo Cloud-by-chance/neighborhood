@@ -4,9 +4,6 @@ import com.example.nuvi_demo.service.board.BoardService;
 import com.example.nuvi_demo.web.dto.board.BoardResponseDto;
 import com.example.nuvi_demo.web.dto.board.BoardSaveRequestDto;
 import com.example.nuvi_demo.web.dto.board.BoardUpdateRequestDto;
-import com.example.nuvi_demo.web.dto.post.PostResponseDto;
-import com.example.nuvi_demo.web.dto.post.PostSaveRequestDto;
-import com.example.nuvi_demo.web.dto.post.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

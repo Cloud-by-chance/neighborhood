@@ -1,16 +1,11 @@
 package com.example.nuvi_demo.web;
 
-import com.example.nuvi_demo.service.member.MemberService;
 import com.example.nuvi_demo.service.post.PostService;
-import com.example.nuvi_demo.web.dto.member.MemberResponseDto;
-import com.example.nuvi_demo.web.dto.member.MemberSaveRequestDto;
-import com.example.nuvi_demo.web.dto.member.MemberUpdateRequestDto;
 import com.example.nuvi_demo.web.dto.post.PostListResponseDto;
 import com.example.nuvi_demo.web.dto.post.PostResponseDto;
 import com.example.nuvi_demo.web.dto.post.PostSaveRequestDto;
 import com.example.nuvi_demo.web.dto.post.PostUpdateRequestDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
