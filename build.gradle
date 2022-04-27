@@ -1,6 +1,5 @@
-
-buildscript{
-repositories {
+buildscript {
+    repositories {
         mavenLocal()
         maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'https://maven.aliyun.com/repository/google/' }
@@ -8,13 +7,35 @@ repositories {
         maven { url 'https://maven.aliyun.com/repository/spring/' }
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin/' }
         maven { url 'https://maven.aliyun.com/repository/spring-plugin/' }
+
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.6")
+    }
+} 
+
+plugins {
+	id 'org.springframework.boot' version '2.6.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
 	mavenCentral()
 }
 
 dependencies {
-	//classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.6.RELEASE")
-	classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.6")
-	/*
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-mustache'
 
@@ -48,29 +69,13 @@ dependencies {
 
 	//redis 사용
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-*/
+
 
 
 }
-}
-plugins {
-	id 'org.springframework.boot' version '2.6.6'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
-}
-
-group = 'com.example'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
-}
-
 
 test {
 	exclude 'com/example/**'
 	useJUnitPlatform()
 }
+
