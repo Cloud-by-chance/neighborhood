@@ -1,13 +1,13 @@
 //<<<<<<< HEAD
 //=======
 buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.6.RELEASE")
-	}
-}
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.6")
+    }
+} 
 
 //>>>>>>> 31768f866a2761e9eb739823c0b214808af89696
 plugins {
@@ -75,6 +75,7 @@ test {
 }
 
 bootJar {
+//<<<<<<< HEAD
 	mainClassName='com.example.nuvi_demo.NuviDemoApplication'
 }
 
@@ -82,3 +83,14 @@ bootRun {
 	String activeProfile = System.properties['spring.profiles.active']
 	systemProperty "spring.profiles.active", activeProfile
 }
+//=======
+//   mainClassName='com.example.nuvi_demo.NuviDemoApplication'
+//}
+//
+//bootRun {
+//   String activeProfile = System.properties['spring.profiles.active']
+//   systemProperty "spring.profiles.active", activeProfile
+//}
+//
+//
+//>>>>>>> fb9286c5cd49f7e89d1613203c3159440fd21a22
