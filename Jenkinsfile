@@ -30,9 +30,11 @@ pipeline {
             }
         }
         steps {
-	    //sh './gradlew clean build'
-	    //sh './gradlew --refresh-dependencies'
-            sh 'gradle clean build -b build.gradle --scan'
+	    sh 'chmod +x gradlew'
+                sh  './gradlew clean build'
+                sh  './gradlew --refresh-dependencies'
+                sh  'ls -al ./build'
+            //sh 'gradle clean build -b build.gradle --scan'
         }
     }
     stage('Docker Image Build') {
