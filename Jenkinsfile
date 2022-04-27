@@ -32,7 +32,7 @@ pipeline {
         steps {
 	    //sh './gradlew clean build'
 	    //sh './gradlew --refresh-dependencies'
-            sh 'gradle clean build -b build.gradle --info'
+            sh 'gradle clean build -b build.gradle --scan'
         }
     }
     stage('Docker Image Build') {
