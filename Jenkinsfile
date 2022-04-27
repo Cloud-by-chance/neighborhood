@@ -77,7 +77,7 @@ pipeline {
                 }
         }
     }  
-/*
+
     stage('K8S Manifest Update') {
         steps {
             git url: 'https://github.com/Cloud-by-chance/neighborhood-manifest.git',
@@ -100,7 +100,7 @@ pipeline {
                 }
         }
     }
-*/
+
 
   }  
 }
