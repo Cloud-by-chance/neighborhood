@@ -223,7 +223,7 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
         return responseService.getSuccessResult();
     }
 
-    @RequestMapping(value = "/kakaoLogin")
+    @RequestMapping(value = "/kakaologin")
     public ListResult<String> login(@RequestBody TokenVo tokenVo){
         HashMap<String, Object> userInfo = kakao.getUserInfo(tokenVo.getAccessToken());
         User userCheck = userJpaRepo.findById(userInfo.get("id").toString()).orElseThrow(CEmailSigninFailedException::new);
