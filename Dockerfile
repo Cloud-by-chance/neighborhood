@@ -5,7 +5,7 @@ FROM openjdk:11
 
 #빌드된 JAR_FILE을 app.jar로 복사
 #COPY ${JAR_FILE} /app.jar
-COPY ./build/libs/*.jar app.jar
+COPY ./build/libs/*SNAPSHOT.jar app.jar
 
 #CMD ["mv", "/*.jar", "/app.jar"]
 ENTRYPOINT ["java", "-jar", "app.jar"]
