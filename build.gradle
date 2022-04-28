@@ -1,3 +1,12 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.6")
+    }
+} 
+
 plugins {
 	id 'org.springframework.boot' version '2.6.6'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
@@ -61,3 +70,14 @@ test {
 	exclude 'com/example/**'
 	useJUnitPlatform()
 }
+
+//bootJar {
+//   mainClassName='com.example.nuvi_demo.NuviDemoApplication'
+//}
+//
+//bootRun {
+//   String activeProfile = System.properties['spring.profiles.active']
+//   systemProperty "spring.profiles.active", activeProfile
+//}
+//
+
