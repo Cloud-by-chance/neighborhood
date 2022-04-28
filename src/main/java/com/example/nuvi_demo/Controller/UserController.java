@@ -16,7 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 //import io.swagger.v3.oas.annotations.*;
-@Api(tags = {"2. User"})
+@Api(tags = {"3. User"})
 @RequiredArgsConstructor
 @RestController
 @Slf4j

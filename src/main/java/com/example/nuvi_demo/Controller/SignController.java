@@ -37,7 +37,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@Api(tags = {"1. Sign"})
+@Api(tags = {"2. Sign"})
 @RequiredArgsConstructor
 @RequestMapping(value = "/auth", produces = "application/json;charset=utf-8")
 @CrossOrigin(origins = "*") //리액트와 연동하기 위한 CROS 설정
