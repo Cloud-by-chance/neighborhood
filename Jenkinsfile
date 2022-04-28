@@ -92,8 +92,7 @@ pipeline {
             sh "git add deployment.yaml"
             sh "git commit -m '[UPDATE] cicd-web ${currentBuild.number} image versioning'"
             sshagent(credentials: ['git-ssh']) {
-                //sh "git remote set-url origin git@github.com:Cloud-by-chance/neighborhood-manifest.git"
-                sh "git remote set-url origin git@github.com"
+                sh "git remote set-url origin git@github.com:Cloud-by-chance/neighborhood-manifest.git"
                 sh "git push -u origin main"
              }
         }
