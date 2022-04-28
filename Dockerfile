@@ -4,10 +4,10 @@ FROM openjdk:11
 ARG JAR_FILE=build/libs/*.jar
 
 #빌드된 JAR_FILE을 app.jar로 복사
-COPY ${JAR_FILE} /
+COPY ${JAR_FILE} /app.jar
 
 #CMD ["mv", "/*.jar", "/app.jar"]
-#ENTRYPOINT ["java", "-jar", "/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app.jar"]
 
 #COPY elastic-apm-agent-1.30.1.jar /apm-agent.jar
 
