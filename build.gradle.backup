@@ -15,7 +15,11 @@ configurations {
 }
 
 repositories {
-	mavenCentral()
+    mavenLocal()	
+    maven { url 'https://plugins.gradle.org/m2/' }
+    mavenCentral()
+    jcenter()
+    gradlePluginPortal()
 }
 
 dependencies {
@@ -61,15 +65,4 @@ test {
 	exclude 'com/example/**'
 	useJUnitPlatform()
 }
-
-//bootJar {
-//   mainClassName='com.example.nuvi_demo.NuviDemoApplication'
-//}
-//
-//bootRun {
-//   String activeProfile = System.properties['spring.profiles.active']
-//   systemProperty "spring.profiles.active", activeProfile
-//}
-//
-
 
