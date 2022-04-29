@@ -23,5 +23,5 @@ COPY ./build/libs/*SNAPSHOT.jar app.jar
 COPY ./apm-agent-attach-1.30.1.jar apm-agent.jar
 #COPY ./apm-agent-attach-1.30.1.jar apm-agent.jar
 #-Delastic.apm.secret_token=1234
-ENTRYPOINT ["java","-javaagent:apm-agent.jar", "-Delastic.apm.service_name=NUVI-release -Delastic.apm.environment=dev -Delastic.apm.application_Packages=com.example.nuvi_demo -Delastic.apm.server_urls=http://k8s-es-apmingre-6b3e599b30-1594117206.ap-northeast-2.elb.amazonaws.com","-jar", "app.jar"]
+ENTRYPOINT ["java","-javaagent:apm-agent.jar", "-Delastic.apm.service_name=NUVI-release -Delastic.apm.environment=production -Delastic.apm.application_Packages=com.example.nuvi_demo -Delastic.apm.server_url=http://k8s-es-apmingre-6b3e599b30-1594117206.ap-northeast-2.elb.amazonaws.com","-jar", "app.jar"]
 
