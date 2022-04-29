@@ -17,7 +17,7 @@ COPY ./build/libs/*SNAPSHOT.jar app.jar
 ENTRYPOINT ["java", "-jar", "app.jar"]
 
 # agent - 설치 경로
-RUN apt-get https://search.maven.org/remotecontent?filepath=co/elastic/apm/apm-agent-attach/1.30.1/apm-agent-attach-1.30.1.jar
+RUN curl -sL https://search.maven.org/remotecontent?filepath=co/elastic/apm/apm-agent-attach/1.30.1/apm-agent-attach-1.30.1.jar /
 
 COPY apm-agent-attach-1.30.1.jar /apm-agent.jar
 
