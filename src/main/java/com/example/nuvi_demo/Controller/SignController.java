@@ -50,8 +50,6 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
                 .password(passwordEncoder.encode(user2.getPassword()))
                 .nick_name(user2.getNick_name())
                 .email(user2.getEmail())
-                .age(user2.getAge())
-                .region(user2.getRegion())
                 .roles(Collections.singletonList("ROLE_USER"))
                 .build());
         return responseService.getSuccessResult();
@@ -157,6 +155,7 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
         log.info(String.valueOf(token));
         String key = token.getRefreshToken();
         log.info(key);
+
         String accessToken = token.getAccessToken();
         String userid = jwtTokenProvider.informationToken(key).toString(); //유저 이름을 받아옴
         //noinspection OptionalGetWithoutIsPresent
@@ -180,7 +179,6 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
                 while ((line = br.readLine()) != null) {
                     result.append(line);
                 }
-                System.out.println(result);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -235,5 +233,6 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
 
         return responseService.getListResult(res);
     }
+
 
 }
