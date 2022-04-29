@@ -165,11 +165,7 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     @ApiOperation(value = "로그아웃", notes = "회원을 삭제한다.")
     @PostMapping("/logout")
     public SingleResult<String> logout(@RequestBody TokenVo token) {
-        log.info(String.valueOf(token));
-
         String key = token.getRefreshToken();
-        log.info(key);
-
         String accessToken = token.getAccessToken();
 
         String userid = jwtTokenProvider.informationToken(key).toString(); //유저 이름을 받아옴
@@ -198,7 +194,6 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
                 while ((line = br.readLine()) != null) {
                     result.append(line);
                 }
-                System.out.println(result);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -256,5 +251,6 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
 
         return responseService.getListResult(res);
     }
+
 
 }
