@@ -14,7 +14,7 @@ FROM openjdk:11
 COPY ./build/libs/*SNAPSHOT.jar app.jar
 
 #CMD ["mv", "/*.jar", "/app.jar"]
-ENTRYPOINT ["java", "-jar", "app.jar"]
+#ENTRYPOINT ["java", "-jar", "app.jar"]
 
 # agent - 설치 경로 (현재 포트막혀있어서 이 방식으로 설치 x)
 # RUN wget https://search.maven.org/remotecontent?filepath=co/elastic/apm/apm-agent-attach/1.30.1/apm-agent-attach-1.30.1.jar
