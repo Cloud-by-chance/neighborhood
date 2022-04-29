@@ -61,6 +61,104 @@ test {
 	exclude 'com/example/**'
 	useJUnitPlatform()
 }
+//<<<<<<< HEAD
+////<<<<<<< HEAD
+////=======
+//buildscript {
+//    repositories {
+//        mavenCentral()
+//    }
+//    dependencies {
+//        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.6.6")
+//    }
+//}
+//
+////>>>>>>> 31768f866a2761e9eb739823c0b214808af89696
+//plugins {
+//	id 'org.springframework.boot' version '2.6.6'
+//	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+//	id 'java'
+//}
+//
+//group = 'com.example'
+//version = '0.0.1-SNAPSHOT'
+//sourceCompatibility = '11'
+//
+//configurations {
+//	compileOnly {
+//		extendsFrom annotationProcessor
+//	}
+//}
+//
+//repositories {
+//	mavenCentral()
+//}
+//
+//dependencies {
+//	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+//	implementation 'org.springframework.boot:spring-boot-starter-mustache'
+//
+//	implementation 'org.springframework.boot:spring-boot-starter-web'
+//	implementation 'junit:junit:4.13.1'
+//	compileOnly 'org.projectlombok:lombok'
+//	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+//	runtimeOnly 'mysql:mysql-connector-java' //실제 배포용
+////	runtimeOnly 'com.h2database:h2'
+//	annotationProcessor 'org.projectlombok:lombok'
+//	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+//	testImplementation 'org.springframework.security:spring-security-test'
+//
+//	// Spring Security 추가
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	//jwt
+//	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+//
+//
+//
+//	//롬복 추가! 2개가 필요
+//	compileOnly 'org.projectlombok:lombok'
+//	annotationProcessor 'org.projectlombok:lombok'
+//
+//	//Swagger 라이브러리 추가 swagger ? ==> API의 스펙을 명세, 스프링 부트에서는 어노테이션을 해석해 API 문서를 자동 생성
+//	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+//	implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+//
+//	//JSON Parsing
+//	dependencies { implementation 'com.google.code.gson:gson:2.8.7' }
+//
+//	//redis 사용
+//	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+//
+//
+//
+//}
+//
+//test {
+//	exclude 'com/example/**'
+//	useJUnitPlatform()
+//}
+////
+////bootJar {
+//////<<<<<<< HEAD
+////	bootJarMainClassName='com.example.nuvi_demo.NuviDemoApplication'
+////}
+////
+////bootRun {
+////	String activeProfile = System.properties['spring.profiles.active']
+////	systemProperty "spring.profiles.active", activeProfile
+////}
+////=======
+////   mainClassName='com.example.nuvi_demo.NuviDemoApplication'
+////}
+////
+////bootRun {
+////   String activeProfile = System.properties['spring.profiles.active']
+////   systemProperty "spring.profiles.active", activeProfile
+////}
+////
+////
+////>>>>>>> fb9286c5cd49f7e89d1613203c3159440fd21a22
+//=======
 
 //bootJar {
 //   mainClassName='com.example.nuvi_demo.NuviDemoApplication'
@@ -73,3 +171,4 @@ test {
 //
 
 
+//>>>>>>> b45adc134eba443a9c1fd19e4a52ef39a037de71
