@@ -4,9 +4,10 @@ import com.example.nuvi_demo.service.board.BoardService;
 import com.example.nuvi_demo.web.dto.board.BoardResponseDto;
 import com.example.nuvi_demo.web.dto.board.BoardSaveRequestDto;
 import com.example.nuvi_demo.web.dto.board.BoardUpdateRequestDto;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
+@Api(tags = {"3. Board Api"})
 @RestController
 @RequiredArgsConstructor
 public class BoardApiController {

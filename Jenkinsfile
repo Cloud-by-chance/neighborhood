@@ -22,6 +22,7 @@ pipeline {
                 }
         }
     }
+/*
     stage('Build and test') {
         agent {
             docker {
@@ -30,11 +31,21 @@ pipeline {
             }
         }
         steps {
-	    //sh './gradlew clean build'
-	    //sh './gradlew --refresh-dependencies'
-            sh 'gradle clean build -b build.gradle --scan'
+<<<<<<< HEAD
+	    sh './gradlew clean build'
+//            sh 'gradle clean build -b build.gradle'
+=======
+		sh  '/var/jenkins_home/tools/hudson.plugins.gradle.GradleInstallation/cicd-gradle/bin/gradle clean build'
+		//sh 'gradle wrapper'
+	        //sh 'chmod +x gradlew'
+                //sh  './gradlew clean build'
+                //sh  './gradlew --refresh-dependencies'
+                //sh  'ls -al ./build'
+            //sh 'gradle clean build -b build.gradle --scan'
+>>>>>>> 7d5def0c6bad4417097cec75207e4788aa5165ce
         }
     }
+*/
     stage('Docker Image Build') {
         steps {
             sh "docker build . -t ${dockerHubRegistry}:${currentBuild.number}"
@@ -71,15 +82,15 @@ pipeline {
                 }
         }
     }  
-/*
+
     stage('K8S Manifest Update') {
         steps {
             git url: 'https://github.com/Cloud-by-chance/neighborhood-manifest.git',
                 branch: 'main'
 
-            sh "sed -i 's/cicd-web:.*\$/cicd-web:${currentBuild.number}/g' deployment.yaml"
+            sh "sed -i 's/cicd-back:.*\$/cicd-back:${currentBuild.number}/g' deployment.yaml"
             sh "git add deployment.yaml"
-            sh "git commit -m '[UPDATE] cicd-web ${currentBuild.number} image versioning'"
+            sh "git commit -m '[UPDATE] cicd-back ${currentBuild.number} image versioning'"
             sshagent(credentials: ['git-ssh']) {
                 sh "git remote set-url origin git@github.com:Cloud-by-chance/neighborhood-manifest.git"
                 sh "git push -u origin main"
@@ -94,7 +105,7 @@ pipeline {
                 }
         }
     }
-*/
+
 
   }  
 }

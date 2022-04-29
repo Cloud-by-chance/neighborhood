@@ -37,7 +37,7 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@Api(tags = {"1. Sign"})
+@Api(tags = {"2. Sign"})
 @RequiredArgsConstructor
 @RequestMapping(value = "/auth", produces = "application/json;charset=utf-8")
 @CrossOrigin(origins = "*") //리액트와 연동하기 위한 CROS 설정
@@ -165,11 +165,7 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
     @ApiOperation(value = "로그아웃", notes = "회원을 삭제한다.")
     @PostMapping("/logout")
     public SingleResult<String> logout(@RequestBody TokenVo token) {
-        log.info(String.valueOf(token));
-
         String key = token.getRefreshToken();
-        log.info(key);
-
         String accessToken = token.getAccessToken();
 
         String userid = jwtTokenProvider.informationToken(key).toString(); //유저 이름을 받아옴
@@ -198,7 +194,6 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
                 while ((line = br.readLine()) != null) {
                     result.append(line);
                 }
-                System.out.println(result);
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -223,7 +218,7 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
         return responseService.getSuccessResult();
     }
 
-    @RequestMapping(value = "/kakaoLogin")
+    @RequestMapping(value = "/kakaologin")
     public ListResult<String> login(@RequestBody TokenVo tokenVo){
         HashMap<String, Object> userInfo = kakao.getUserInfo(tokenVo.getAccessToken());
         User userCheck = userJpaRepo.findById(userInfo.get("id").toString()).orElseThrow(CEmailSigninFailedException::new);
@@ -256,5 +251,6 @@ public class SignController { //가입과 로그인에 대한 COntroller이다.
 
         return responseService.getListResult(res);
     }
+
 
 }

@@ -28,7 +28,7 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
     @Value("spring.jwt.secret")
     private String secretKey;
 
-    private long tokenValidMilisecond = 1000L * 2 * 60 ; // 1000L * n *60 에서 n분이다.
+    private long tokenValidMilisecond = 1000L * 30 * 60 ; // 1000L * n *60 에서 n분이다.
     private long refreshTokenValidMillisecond = 60 * 60 * 1000L; //사용 x?
     private final UserDetailsService userDetailsService; // 유저 정보를 저장하기 위한 객체 생성
 
@@ -75,6 +75,8 @@ public class JwtTokenProvider { // JWT 토큰을 생성 및 검증 모듈
 
     // Request의 Header에서 token 파싱 : "X-AUTH-TOKEN: jwt토큰"
     public String resolveToken(HttpServletRequest req) {
+        log.info(req.getHeader("Origin"));
+        log.info(req.getHeader("x-auth-token"));
         return req.getHeader("X-AUTH-TOKEN");
     }
 

@@ -61,6 +61,7 @@ test {
 	exclude 'com/example/**'
 	useJUnitPlatform()
 }
+//<<<<<<< HEAD
 ////<<<<<<< HEAD
 ////=======
 //buildscript {
@@ -157,3 +158,17 @@ test {
 ////
 ////
 ////>>>>>>> fb9286c5cd49f7e89d1613203c3159440fd21a22
+//=======
+
+//bootJar {
+//   mainClassName='com.example.nuvi_demo.NuviDemoApplication'
+//}
+//
+//bootRun {
+//   String activeProfile = System.properties['spring.profiles.active']
+//   systemProperty "spring.profiles.active", activeProfile
+//}
+//
+
+
+//>>>>>>> b45adc134eba443a9c1fd19e4a52ef39a037de71
