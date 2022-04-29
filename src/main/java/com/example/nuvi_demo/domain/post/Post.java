@@ -27,6 +27,7 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long post_id;
+
     private Long board_id;
     private String post_name;
     private String user_id;

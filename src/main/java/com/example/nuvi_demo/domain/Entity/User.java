@@ -36,7 +36,6 @@ public class User implements UserDetails { //user Detail을 상속받는다 즉 
     @Column(nullable = false, length = 100)
     private String nick_name;
 
-
     @Column(nullable = true, length = 100)
     private String email;
 
