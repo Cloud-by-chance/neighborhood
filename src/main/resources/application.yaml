@@ -1,11 +1,15 @@
 
 #LOAD profile aws
 spring:
-  #  h2:
-  #    console:
-  #      enabled: true
+  config:
+    activate:
+      on-profile: local
+
   profiles:
-    include: aws
+    group:
+      local:
+        - aws
+        - Elasticapm
   # auto reload
   devtools:
     livereload:
